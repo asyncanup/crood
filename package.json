@@ -1,7 +1,7 @@
 {
   "name": "crood",
   "description": "Web-based code editor in node.js",
-  "version": "1.0.0.",
+  "version": "1.0.1",
   "author": {
     "name": "Anup Bishnoi",
     "email": "pixelsallover@gmail.com"

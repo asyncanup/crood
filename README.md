@@ -6,12 +6,12 @@ Web Based Code Editor
 ## Usage
 
 * Install [Node](http://nodejs.org/download/)
-* In the command prompt, run
+* Download or clone this repository, in the repo folder
 
-    npm install crood
+    node server.js
 
 * Now open `http://localhost:8000` and enter any local path in the input box.
 
-## Screenshots
+## Screenshot
 
 ![Crood UI](https://dl.dropboxusercontent.com/u/1140834/crood-screen.PNG "Crood UI")
