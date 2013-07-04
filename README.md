@@ -8,7 +8,9 @@ Web Based Code Editor
 * Install [Node](http://nodejs.org/download/)
 * Download or clone this repository, in the repo folder
 
-    node server.js
+
+        node server.js
+
 
 * Now open `http://localhost:8000` and enter any local path in the input box.
 
