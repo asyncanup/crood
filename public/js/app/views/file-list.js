@@ -27,6 +27,8 @@ define(function (require, exports, module) {
 
                 if (!fileItem.get("isFolder")) {
                     this.editorModel.set("filePath", filePath);
+                } else {
+                    
                 }
                 event.preventDefault();
             }
