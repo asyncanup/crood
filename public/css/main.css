@@ -1,0 +1,53 @@
+body {
+    overflow: hidden;
+}
+
+#editor {
+    margin: 0;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.file-list {
+    z-index: 10;
+    position: absolute;
+    top: 7px;
+    right: 19px;
+}
+
+.file-list .folder-input {
+    width: 200px;
+    font-size: 11px;
+}
+
+.file-list .nav-list {
+    box-shadow: 0 1px 4px rgba(0,0,0,.065);
+    background-color: white;
+    padding: 0;
+    border-radius: 6px;
+}
+.file-list .nav-list li {
+    line-height: 15px;
+}
+.file-list .nav-list li a {
+    border: 1px solid #e5e5e5;
+    margin: 0 0 -1px;
+    padding: 8px 14px;
+    font-size: 10px;
+}
+.file-list .nav-list .active .icon-chevron-right,
+.file-list .nav-list .active a:hover .icon-chevron-right {
+    background-image: url(../img/glyphicons-halflings-white.png);
+    opacity: 1;
+}
+.file-list .nav-list a .icon-chevron-right {
+    opacity: .5;
+}
+.file-list .nav-list .icon-chevron-right {
+    float: right;
+    margin-top: 0;
+    margin-right: -8px;
+}

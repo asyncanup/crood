@@ -1,0 +1,35 @@
+{
+  "name": "crood",
+  "description": "Web-based code editor in node.js",
+  "version": "0.0.1",
+  "author": {
+    "name": "Anup Bishnoi",
+    "email": "pixelsallover@gmail.com"
+  },
+  "dependencies": {
+    "debug": "~0.7.2",
+    "apper": "0.0.7",
+    "shelljs": "~0.1.4",
+    "express": "~3.3.2"
+  },
+  "keywords": [
+    "code editor",
+    "web",
+    "node.js",
+    "editor"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/anupbishnoi/crood"
+  },
+  "main": "index",
+  "scripts": {
+    "prepublish": "npm prune",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "license": "MIT"
+}
