@@ -1,5 +1,6 @@
 body {
     overflow: hidden;
+    background-color: #FDF6E3;
 }
 
 #editor {
@@ -11,16 +12,32 @@ body {
     right: 0;
 }
 
+body input.folder-input {
+    width: 186px;
+    font-size: 11px;
+}
+
+.folder-up-button {
+    border-radius: 10px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 46px;
+    border: 1px solid rgb(0, 0, 0);
+    left: -30px;
+    cursor: pointer;
+    opacity: 0.7;
+    background: white;
+}
+.folder-up-button .icon-chevron-left {
+    margin-left: 3px;
+}
+
 .file-list {
     z-index: 10;
     position: absolute;
     top: 7px;
-    right: 19px;
-}
-
-.file-list .folder-input {
-    width: 200px;
-    font-size: 11px;
+    right: 22px;
 }
 
 .file-list .nav-list {
@@ -28,6 +45,7 @@ body {
     background-color: white;
     padding: 0;
     border-radius: 6px;
+    width: 200px;
 }
 .file-list .nav-list li {
     line-height: 15px;
@@ -36,7 +54,7 @@ body {
     border: 1px solid #e5e5e5;
     margin: 0 0 -1px;
     padding: 8px 14px;
-    font-size: 10px;
+    font-size: 11px;
 }
 .file-list .nav-list .active .icon-chevron-right,
 .file-list .nav-list .active a:hover .icon-chevron-right {

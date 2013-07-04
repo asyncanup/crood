@@ -3,9 +3,11 @@ define(function (require, exports, module) {
 
     var Backbone = require("backbone"),
         _ = require("underscore"),
+        $ = require("jquery"),
         ace = require("ace/ace"),
         animate = require("app/animations"),
-        debug = require("utils/debug")("views/editor");
+        debug = require("utils/debug")("views/editor"),
+        path = require("utils/path");
 
     var editorElementId = "editor";
 
@@ -19,7 +21,7 @@ define(function (require, exports, module) {
             this.listenTo(this.model, "change:fileExt", this.setSyntaxMode);
             this.listenTo(this.model, "change:filePath", function () {
                 this.disableCursorChangeHandler();
-                this.once("contentShown", function () {
+                this.once("doneChangingContent", function () {
                     this.enableCursorChangeHandler();
                 });
             });
@@ -57,15 +59,8 @@ define(function (require, exports, module) {
                 this.model.set("fileExt", this.defaultFileExt);
                 return;
             }
-            var fileExt;
-            try {
-                fileExt = filePath.match(this.fileExtRegExp)[0].slice(1);
-                debug("New file has extension: " + fileExt);
-                this.model.set("fileExt", fileExt);
-            } catch (e) {
-                debug("No file extension found for selected file! Showing as text.");
-                this.model.set("fileExt", this.defaultFileExt);
-            }
+            var fileExt = path.extname(filePath) || this.defaultFileExt;
+            this.model.set("fileExt", fileExt);
 
             debug("Fetching file: " + filePath);
             var model = this.model;
@@ -85,15 +80,24 @@ define(function (require, exports, module) {
 
         changeContent: function (content) {
             var contentArea = this.contentAreaCss ? this.$el.find(this.contentAreaCss) : this.$el,
-                editor = this.aceEditor;
+                editor = this.aceEditor,
+                _this = this;
 
-            debug("Changing content and fading it in..");
-            animate.fadeIn(contentArea);
-            editor.setValue(content);
-            editor.clearSelection();
-            editor.gotoLine(1);
-            editor.moveCursorToPosition(this.getLastCursorPosition());
-            this.trigger("contentShown");
+            if (content !== editor.getValue()) {
+                debug("Changing content");
+                animate.popIn(
+                    contentArea,
+                    function () {
+                        editor.setValue(content);
+                        editor.clearSelection();
+                        editor.getSession().setScrollTop(0);
+                        editor.moveCursorToPosition(_this.getLastCursorPosition());
+                        _this.trigger("doneChangingContent");
+                    }
+                );
+            } else {
+                _this.trigger("doneChangingContent");
+            }
         },
 
         lastPositionKey: function (filePath) {
@@ -142,9 +146,18 @@ define(function (require, exports, module) {
             _.defer(function () {
                 try {
                     debug("Initializing Ace editor on div: #" + _this.elementId);
+                    _this.$el.hide();
                     _this.aceEditor = window.editor = ace.edit(_this.elementId);
+
+                    if (_this.model.get("filePath")) {
+                        _this.loadFile();
+                    } else {
+                        _this.aceEditor.setValue(_this.helpContent);
+                    }
+                    
+                    _this.aceEditor.clearSelection();
+                    _this.aceEditor.gotoLine(1);
                     _this.setTheme();
-                    _this.showDefaultScreen();
                     _this.aceEditor.getSession().selection.on("changeCursor", function (e) {
                         if (_this.isCursorChangeHandlerActive) {
                             _this.setLastCursorPosition();
@@ -158,8 +171,12 @@ define(function (require, exports, module) {
                         },
                         readOnly: true // false if this command should not apply in readOnly mode
                     });
+
+                    _this.$el.fadeIn();
+                    _this.trigger("initialized");
                 } catch (err) {
-                    debug("#" + _this.elementId + " does not exist in the DOM yet.");
+                    debugger;
+                    debug(err.message, err.stack);
                 }
             });
         },
@@ -183,11 +200,6 @@ define(function (require, exports, module) {
             );
         },
 
-        showDefaultScreen: function () {
-            debug("Showing default screen with help content.");
-            this.model.set("filePath", "");
-        },
-
         render: function () {
             if (!this.aceEditor) {
                 this.initializeAceEditor();
@@ -196,7 +208,8 @@ define(function (require, exports, module) {
         },
 
         modes: {
-            "js": "javascript"
+            "js": "javascript",
+            "md": "markdown"
         },
 
         fileExtRegExp: /\.[^.]+$/,
@@ -206,6 +219,6 @@ define(function (require, exports, module) {
         elementId: editorElementId,
         contentAreaCss: null,
         lastPositionPrefix: "lastPosition-",
-        helpContent: ""
+        helpContent: "Enter a folder path in the input box →"
     });
 });

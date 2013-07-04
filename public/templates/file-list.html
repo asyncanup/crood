@@ -1,8 +1,6 @@
-<input type="text" placeholder="Enter directory path here" class="folder-input" value="{{folderPath}}">
-
 <ul class="nav nav-list">
 {{#each files}}
-    <li class="{{#if active}}active{{/if}}">
+    <li class="{{#if isActive}}active{{/if}}">
         <a href="#">
             {{#if isFolder}}
                 <i class="icon-chevron-right"></i>

@@ -12,8 +12,15 @@ module.exports = function (app) {
         app.get("/" + cmd, function (req, res) {
             var path = req.query.path;
 
+            var testCriteria;
+            if (cmd === "cat") {
+                testCriteria = "-f";
+            } else if (cmd === "ls") {
+                testCriteria = "-d";
+            }
+
             try {
-                if (shell.test("-e", path)) {
+                if (shell.test(testCriteria, path)) {
                     res.json({
                         success: true,
                         data: shell[cmd](path)
@@ -34,7 +41,7 @@ module.exports = function (app) {
 
         try {
             shell.echo(req.body.data).to(path);
-            debug("Saving to disk: " + path + "\n------\n" + req.body.data);
+            debug(">> Saving to file: " + path);
             res.json({ success: true });
         } catch (err) {
             debug("Error writing file to disk: " + path);

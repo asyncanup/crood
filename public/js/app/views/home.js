@@ -13,14 +13,16 @@ define(function (require, exports, module) {
         el: "body",
 
         initialize: function () {
-            this.editorModel = new EditorModel();
+            var editorModel = this.editorModel = new EditorModel();
+            editorModel.updateFromQueryString();
+
             this.editor = new EditorView({
                 model: this.editorModel
             });
 
             this.fileListCollection = new FileListCollection();
             this.fileList = new FileListView({
-                editorModel: this.editorModel,
+                model: this.editorModel,
                 collection: this.fileListCollection
             })
         },
