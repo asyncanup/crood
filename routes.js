@@ -18,7 +18,7 @@ module.exports = function (app) {
             } else if (cmd === "ls") {
                 testCriteria = "-d";
             }
-
+            
             try {
                 if (shell.test(testCriteria, path)) {
                     res.json({

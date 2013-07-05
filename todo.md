@@ -10,6 +10,8 @@ TODO
 * Commit to git from inside this? It's possible.
 
 
+
+
 ## Bugs
 
 * Hide Folder Up (back) button when folderPath has no value

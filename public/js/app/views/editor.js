@@ -171,7 +171,6 @@ define(function (require, exports, module) {
                     _this.$el.fadeIn();
                     _this.trigger("initialized");
                 } catch (err) {
-                    debugger;
                     debug(err.message, err.stack);
                 }
             });
@@ -206,7 +205,8 @@ define(function (require, exports, module) {
 
         modes: {
             "js": "javascript",
-            "md": "markdown"
+            "md": "markdown",
+            "cs": "csharp"
         },
 
         fileExtRegExp: /\.[^.]+$/,

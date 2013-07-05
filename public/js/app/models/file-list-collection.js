@@ -2,7 +2,9 @@ define(function (require, exports, module) {
     "use strict";
 
     var Backbone = require("backbone"),
-        debug = require("utils/debug")("models/file-list-collection");
+        debug = require("utils/debug")("models/file-list-collection"),
+        $ = require("jquery"),
+        _ = require("underscore");
 
     module.exports = Backbone.Collection.extend({
         refreshFileList: function (folderPath) {

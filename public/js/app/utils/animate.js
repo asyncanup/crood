@@ -33,7 +33,7 @@ define(function (require, exports, module) {
             }
 
             el.addClass("anim-short-ease-out-quart");
-            el.addClass("anim-hidden")
+            el.addClass("anim-hidden");
             el.addClass("anim-slid-" + direction);
             _.delay(function () {
                 halfwayCallback && halfwayCallback();
