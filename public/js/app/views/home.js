@@ -13,8 +13,15 @@ define(function (require, exports, module) {
         el: "body",
 
         initialize: function () {
-            var editorModel = this.editorModel = new EditorModel();
+            var editorModel = window.editorModel = this.editorModel = new EditorModel();
             editorModel.updateFromQueryString();
+
+            $(window).on("popstate", function () {
+                editorModel.updateFromQueryString();
+            });
+            editorModel.on("change:filePath change:folderPath", function () {
+                editorModel.updateQueryString();
+            });
 
             this.editor = new EditorView({
                 model: this.editorModel

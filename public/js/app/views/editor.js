@@ -5,7 +5,7 @@ define(function (require, exports, module) {
         _ = require("underscore"),
         $ = require("jquery"),
         ace = require("ace/ace"),
-        animate = require("app/animations"),
+        animate = require("utils/animate"),
         debug = require("utils/debug")("views/editor"),
         path = require("utils/path");
 
@@ -19,12 +19,6 @@ define(function (require, exports, module) {
 
             this.listenTo(this.model, "change:filePath", this.loadFile);
             this.listenTo(this.model, "change:fileExt", this.setSyntaxMode);
-            this.listenTo(this.model, "change:filePath", function () {
-                this.disableCursorChangeHandler();
-                this.once("doneChangingContent", function () {
-                    this.enableCursorChangeHandler();
-                });
-            });
         },
 
         events: {
@@ -85,18 +79,20 @@ define(function (require, exports, module) {
 
             if (content !== editor.getValue()) {
                 debug("Changing content");
-                animate.popIn(
+                animate.slideOutIn(
                     contentArea,
                     function () {
+                        _this.disableCursorChangeHandler();
+
                         editor.setValue(content);
                         editor.clearSelection();
                         editor.getSession().setScrollTop(0);
                         editor.moveCursorToPosition(_this.getLastCursorPosition());
-                        _this.trigger("doneChangingContent");
-                    }
+
+                        _this.enableCursorChangeHandler();
+                    },
+                    "left"
                 );
-            } else {
-                _this.trigger("doneChangingContent");
             }
         },
 

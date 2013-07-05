@@ -22,12 +22,15 @@ body input.folder-input {
     width: 20px;
     height: 20px;
     position: absolute;
-    top: 46px;
+    top: 4px;
     border: 1px solid rgb(0, 0, 0);
     left: -30px;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.6;
     background: white;
+}
+.folder-up-button:hover {
+    opacity: 1;
 }
 .folder-up-button .icon-chevron-left {
     margin-left: 3px;

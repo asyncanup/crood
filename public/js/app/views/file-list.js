@@ -4,7 +4,8 @@ define(function (require, exports, module) {
     var Backbone = require("backbone"),
         Handlebars = require("handlebars");
 
-    var path = require("utils/path");
+    var path = require("utils/path"),
+        animate = require("utils/animate");
 
     module.exports = Backbone.View.extend({
         className: "file-list",
@@ -30,9 +31,6 @@ define(function (require, exports, module) {
             "click .nav-list li a": function (event) {
                 var el = this.$(event.target),
                     index = el.closest("li").index();
-
-                // TODO: this probably shouldn't be here
-                el.addClass("active");
 
                 this.selectItem(this.collection.at(index));
                 event.preventDefault();
@@ -67,8 +65,11 @@ define(function (require, exports, module) {
             // TODO: animate
             var el = this.$el,
                 items = this.collection,
-                folderPath = this.model.get("folderPath"),
-                filePath = this.model.get("filePath");
+                model = this.model,
+                folderPath = model.get("folderPath"),
+                filePath = model.get("filePath"),
+                previousFolderPath = model.previous("folderPath"),
+                _this = this;
 
             items.forEach(function (item) {
                 item.set("isActive", false);
@@ -76,24 +77,33 @@ define(function (require, exports, module) {
                     item.set("isActive", true);
                 }
             });
-            el.empty();
-            if (items.length) {
-                el.append(this.folderUpButtonTemplate())
-            }
-            el.append(this.folderInputTemplate({
-                folderPath: this.model.get("folderPath")
-            }));
-            el.append(this.fileListTemplate({
-                files: items.toJSON()
-            }));
 
-            var fileListEl = this.$el.find(".nav-list");
-            if (fileListEl.height() > 500) {
-                fileListEl.css({
-                    "overflow-y": "scroll",
-                    "height": "500px"
-                });
+            function render() {
+                el.empty();
+                el.append(_this.folderUpButtonTemplate());
+                el.append(_this.folderInputTemplate({
+                    folderPath: _this.model.get("folderPath")
+                }));
+                el.append(_this.fileListTemplate({
+                    files: items.toJSON()
+                }));
+
+                var fileListEl = _this.$el.find(".nav-list");
+                if (fileListEl.height() > 500) {
+                    fileListEl.css({
+                        "overflow-y": "scroll",
+                        "height": "500px"
+                    });
+                }
             }
+
+            if (previousFolderPath.length === folderPath.length) {
+                render();
+            } else {
+                var direction = previousFolderPath.length < folderPath.length ? "left" : "right";
+                animate.slideOutIn(el, render, direction);
+            }
+
             return this;
         }
     });

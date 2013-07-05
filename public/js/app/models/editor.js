@@ -35,7 +35,18 @@ define(function (require, exports, module) {
                 }
             }
 
+            if (folderPath) {
+                attributes.folderPath = folderPath;
+            }
+
             this.set(attributes);
+        },
+
+        updateQueryString: function () {
+            var filePath = this.get("filePath"),
+                folderPath = this.get("folderPath");
+
+            window.history.pushState({}, "", "?filePath=" + filePath + "&folderPath=" + folderPath);
         }
     });
 });
