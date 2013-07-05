@@ -14,6 +14,10 @@ Web Based Code Editor
 
 * Now open `http://localhost:8000` and enter any local path in the input box.
 
+## Functionality
+
+You can view, edit, save files anywhere in the filesystem (where you have access permission to do so)
+
 ## Screenshot
 
 ![Crood UI](https://dl.dropboxusercontent.com/u/1140834/crood-screen.PNG "Crood UI")

@@ -46,7 +46,7 @@ define(function (require, exports, module) {
 
                     el.removeClass("anim-hidden");
                     el.removeClass("anim-slid-" + oppositeDir);
-                
+                 
                     _.delay(function () {
                         el.removeClass("anim-short-ease-out-quart");
                         endCallback && endCallback();
@@ -57,18 +57,21 @@ define(function (require, exports, module) {
             }, 250);
         },
 
-        bigGreenTick: function (el) {
-            el.css("background", "darkred");
+        saveSuccessful: function (el) {
+            el = el || window.$("#editor");
+            el.addClass("anim-short-ease-out-quart");
+            el.addClass("anim-semi-hidden");
             _.delay(function () {
-                el.css("background", "white");
-            }, 1000);
+                el.removeClass("anim-semi-hidden");
+                
+                _.delay(function () {
+                    el.removeClass("anim-short-ease-out-quart");
+                }, 500);
+            }, 500);
         },
 
-        bigRedCross: function (el) {
-            el.css("background", "darkred");
-            _.delay(function () {
-                el.css("background", "white");
-            }, 1000);
+        saveFailure: function (el) {
+            alert("Oops! Couldn't save file.");
         }
     };
 });

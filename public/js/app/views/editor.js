@@ -186,10 +186,11 @@ define(function (require, exports, module) {
                 { data: this.aceEditor.getValue() },
                 function (res){
                     if (res.success) {
-                        animate.bigGreenTick(_this.$el);
+                        debug("File saved: " + filePath);
+                        animate.saveSuccessful(_this.$el);
                     } else {
                         debug("Could not save file to disk: " + filePath);
-                        animate.bigRedCross(_this.$el);
+                        animate.saveFailure(_this.$el);
                     }
                 },
                 "json"
