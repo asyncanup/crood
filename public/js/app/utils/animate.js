@@ -66,8 +66,8 @@ define(function (require, exports, module) {
                 
                 _.delay(function () {
                     el.removeClass("anim-short-ease-out-quart");
-                }, 500);
-            }, 500);
+                }, 250);
+            }, 250);
         },
 
         saveFailure: function (el) {
