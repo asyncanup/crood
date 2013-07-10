@@ -8,7 +8,7 @@ Web Based Code Editor
 * Install [Node](http://nodejs.org/download/)
 * Download or clone this repository, in the repo folder
 
-
+        npm install
         node server.js
 
 

@@ -27,7 +27,7 @@ define(function (require, exports, module) {
             "change .folder-input": function () {
                 this.model.set("folderPath", this.$(".folder-input").val());
             },
-                
+            
             "click .nav-list li a": function (event) {
                 var el = this.$(event.target),
                     index = el.closest("li").index();
