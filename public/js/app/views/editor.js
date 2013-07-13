@@ -59,7 +59,7 @@ define(function (require, exports, module) {
 
             debug("Fetching file: " + filePath);
             var model = this.model;
-            $.getJSON("cat?path=" + filePath, function (res) {
+            $.getJSON("open?filePath=" + filePath, function (res) {
                 debug("File data successfully fetched!");
                 _this.changeContent(res.data);
             });
@@ -92,7 +92,8 @@ define(function (require, exports, module) {
 
                         _this.enableCursorChangeHandler();
                     },
-                    "left"
+                    "left",
+                    function () { _this.$el.find("textarea").focus(); }
                 );
             }
         },
@@ -126,7 +127,7 @@ define(function (require, exports, module) {
                 debug("Could not serialize current cursor position.", cursorPosition);
                 return false;
             }
-            debug("Saving last cursor position in file: " + filePath, "\nto: " + lastPosition);
+            //debug("Saving last cursor position in file: " + filePath, "\nto: " + lastPosition);
             window.localStorage.setItem(this.lastPositionKey(filePath), lastPosition);
             return true;
         }, 1000),

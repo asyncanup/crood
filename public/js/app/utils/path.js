@@ -24,12 +24,12 @@ define(function (require, exports, module) {
             var separator = this.getSeparator(path),
                 components = path.split(separator);
 
-            if (components.length > 2) {
+            if (components.length > 1) {
                 return components.slice(0, -1).join(separator);
             }
         },
         getSeparator: function (path) {
-            return !~path.indexOf("/") ? "\\" : "/";
+            return this.separator || !~path.indexOf("/") ? "\\" : "/";
         }
     }
 });

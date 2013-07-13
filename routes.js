@@ -1,38 +1,49 @@
-var shell = require("shelljs"),
-    debug = require("debug")("crood"),
-    path = require("path");
-
-var exposedCommands = [
-    "cat",
-    "ls"
-];
+var fs = require("fs"),
+    path = require("path"),
+    _ = require("underscore");
+    
+var debug = require("debug")("crood");
 
 module.exports = function (app) {
-
-    exposedCommands.forEach(function (cmd) {
-        app.get("/" + cmd, function (req, res) {
-            var path = req.query.path;
-
-            var testCriteria;
-            if (cmd === "cat") {
-                testCriteria = "-f";
-            } else if (cmd === "ls") {
-                testCriteria = "-d";
+    
+    app.get("/list", function (req, res) {
+        var folderPath = req.query.folderPath;
+        
+        fs.readdir(folderPath, function (err, fileNames) {
+            var files = [];
+            function finalCallback() {
+                res.json({ success: true, data: _.sortBy(files, "fileName") });
             }
             
-            try {
-                if (shell.test(testCriteria, path)) {
-                    res.json({
-                        success: true,
-                        data: shell[cmd](path)
+            if (err) {
+                debug("Couldn't read folder path: " + folderPath);
+                res.json({ success: false, err: err.message });
+            } else if (!fileNames.length) {
+                finalCallback();
+            } else {
+                var proxyCallback = _.after(fileNames.length, finalCallback);
+                fileNames.forEach(function (fileName) {
+                    fs.stat(path.join(folderPath, fileName), function (err, fileStat) {
+                        files.push({
+                            fileName: fileName,
+                            isFolder: fileStat && fileStat.isDirectory()
+                        });
+                        proxyCallback();
                     });
-                } else {
-                    debug("File doesn't exist: " + path);
-                    res.json({ success: false });
-                }
-            } catch (err) {
-                debug("Error " + cmd + "'ing file: " + path);
-                res.json({ success: false });
+                });
+            }
+        });
+    });
+    
+    app.get("/open", function (req, res) {
+        var filePath = req.query.filePath;
+        
+        fs.readFile(filePath, function (err, data) {
+            if (err) {
+                debug("Error reading file from disk: " + filePath);
+                res.json({ success: false, err: err.message });
+            } else {
+                res.json({ success: true, data: data.toString() });
             }
         });
     });
@@ -40,14 +51,14 @@ module.exports = function (app) {
     app.post("/save", function (req, res) {
         var filePath = req.query.filePath;
 
-        try {
-            debug("Saving to file: " + filePath);
-            shell.echo(req.body.data).to(filePath);
-            res.json({ success: true });
-        } catch (err) {
-            debug("Error writing file to disk: " + filePath);
-            res.json({ success: false });
-        }
+        fs.writeFile(filePath, req.body.data, function (err) {
+            if (err) {
+                debug("Error writing file to disk: " + filePath);
+                res.json({ success: false, err: err.message });
+            } else {
+                res.json({ success: true });
+            }
+        });
     });
     
 };

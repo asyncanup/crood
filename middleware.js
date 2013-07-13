@@ -1,5 +1,3 @@
-var express = require("express");
-
 module.exports = function (app) {
-    app.use(express.bodyParser());
+    app.use(app.express.bodyParser());
 };

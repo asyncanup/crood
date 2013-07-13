@@ -35,11 +35,17 @@ define(function (require, exports, module) {
                 el.addClass("visible");
             }, function () {
                 el.addClass("visible");
-                _this.timeout = setTimeout(function () {
-                    if (el.hasClass("visible")) {
+                if (el.find("input").is(":focus")) {
+                    el.find("input").one("blur", setTheTimeout);
+                } else {
+                    setTheTimeout();
+                }
+                
+                function setTheTimeout() {
+                    _this.timeout = setTimeout(function () {
                         el.removeClass("visible");
-                    }
-                }, 2000);
+                    }, 2000);
+                }
             });
         },
 
@@ -52,6 +58,7 @@ define(function (require, exports, module) {
                 var el = this.$(event.target).closest("li"),
                     index = el.index();
 
+                this.$(".nav-list li").removeClass("active");
                 el.addClass("active");
                 el.find("i").addClass("icon-white");
                 this.selectItem(this.collection.at(index));
@@ -143,18 +150,26 @@ define(function (require, exports, module) {
                 _this.timeout = setTimeout(function () {
                     el.removeClass("visible");
                 }, 2000);
-                el.append(_this.folderUpButtonTemplate());
+                if (folderPath) {
+                    el.append(_this.folderUpButtonTemplate());
+                }
+                el.append(_this.newFileButtonsTemplate());
                 el.append(_this.folderInputTemplate({
                     folderPath: folderPath
                 }));
                 el.append(_this.fileListTemplate({
                     files: items.toJSON()
                 }));
-                el.append(_this.newFileButtonsTemplate());
-
-                var fileListEl = el.find(".nav-list");
+                if (el.find("li").hasClass("active")) {
+                    $(".ace_editor").find("textarea").focus();
+                }
                 
-                var windowHeight = $(window).height(),
+                if (!items.length) {
+                    el.find(".new-file-button").addClass("centered");
+                }
+
+                var fileListEl = el.find(".nav-list"),
+                    windowHeight = $(window).height(),
                     availableHeight = (
                         $(window).height() -
                         (
@@ -179,7 +194,11 @@ define(function (require, exports, module) {
                 render();
             } else {
                 var direction = previousFolderPath.length < folderPath.length ? "left" : "right";
-                animate.slideOutIn(el, render, direction);
+                if (direction === "left") {
+                    animate.zoomOutSlideOutIn(el, render, "left");
+                } else {
+                    animate.zoomInSlideOutIn(el, render, "right");
+                }
             }
 
             return this;

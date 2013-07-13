@@ -40,8 +40,9 @@ body input.folder-input {
 .file-list .new-file-button {
     top: 44px;
 }
-.file-list .new-file-button.empty-list {
-    left: 44px;
+.file-list .new-file-button.centered {
+    left: 50%;
+    margin-left: -10px;
 }
 
 .file-list .folder-up-button {
@@ -60,6 +61,7 @@ body input.folder-input {
     opacity: 0.3;
     -webkit-transition: opacity 0.2s ease;
     -webkit-transform: translate3d(0, 0, 0);
+    -webkit-transform-origin: top;
 }
 .file-list:hover {
     opacity: 1;

@@ -2,6 +2,8 @@ define(function (require, exports, module) {
     "use strict";
 
     var _ = require("underscore");
+    
+    var debug = require("utils/debug")("utils/animate");
 
     module.exports = {
         fadeIn: function (el) {
@@ -14,8 +16,8 @@ define(function (require, exports, module) {
                 el.removeClass("anim-short-ease");
             }, 1000);
         },
-
-        slideOutIn: function (el, halfwayCallback, direction, endCallback) {
+        
+        transitionOutIn: function (transitionClassPrefix, el, halfwayCallback, direction, endCallback) {
             if (typeof direction === "function") {
                 endCallback = direction;
                 direction = "left";
@@ -32,20 +34,28 @@ define(function (require, exports, module) {
                 oppositeDir = "up";
             }
 
+            var directionalOutClass = "anim-" + transitionClassPrefix + "-" + direction,
+                transitionClassPrefixOpposite = transitionClassPrefix
+                    .replace("out", "##").replace("in", "!!")
+                    .replace("##", "in").replace("!!", "out"),
+                oppositeDirInClass = "anim-" + transitionClassPrefixOpposite + "-" + oppositeDir;
+            
+            debug(directionalOutClass, oppositeDirInClass);
+            
             el.addClass("anim-short-ease-out-quart");
             el.addClass("anim-hidden");
-            el.addClass("anim-slid-" + direction);
+            el.addClass(directionalOutClass);
             _.delay(function () {
                 halfwayCallback && halfwayCallback();
                 el.removeClass("anim-short-ease-out-quart");
-                el.removeClass("anim-slid-" + direction);
-                el.addClass("anim-slid-" + oppositeDir);
+                el.removeClass(directionalOutClass);
+                el.addClass(oppositeDirInClass);
 
                 _.defer(function () {
                     el.addClass("anim-short-ease-out-quart");
 
                     el.removeClass("anim-hidden");
-                    el.removeClass("anim-slid-" + oppositeDir);
+                    el.removeClass(oppositeDirInClass);
                  
                     _.delay(function () {
                         el.removeClass("anim-short-ease-out-quart");
@@ -55,6 +65,19 @@ define(function (require, exports, module) {
                 
                 
             }, 250);
+            
+        },
+        
+        zoomOutSlideOutIn: function () {
+            return this.transitionOutIn.apply(this, [ "zoomed-out-slid" ].concat([].slice.call(arguments)));
+        },
+        
+        zoomInSlideOutIn: function () {
+            return this.transitionOutIn.apply(this, [ "zoomed-in-slid" ].concat([].slice.call(arguments)));
+        },
+        
+        slideOutIn: function () {
+            return this.transitionOutIn.apply(this, [ "slid" ].concat([].slice.call(arguments)));
         },
 
         saveSuccessful: function (el) {
