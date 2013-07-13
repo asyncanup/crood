@@ -121,12 +121,22 @@ define(function (require, exports, module) {
                 }));
                 el.append(_this.newFileButtonsTemplate());
 
-                var fileListEl = _this.$el.find(".nav-list");
-                var windowHeight = $(window).height();
-                if (fileListEl.height() > windowHeight) {
+                var fileListEl = el.find(".nav-list");
+                
+                var windowHeight = $(window).height(),
+                    availableHeight = (
+                        $(window).height() -
+                        (
+                            parseInt(el.css("top"), 10) +
+                            el.find(".folder-input").outerHeight() +
+                            el.find(".new-file-buttons").outerHeight()
+                        )
+                    );
+
+                if (fileListEl.height() > availableHeight) {
                     fileListEl.css({
                         "overflow-y": "scroll",
-                        "height": (windowHeight - 100) + "px"
+                        "height": (availableHeight - 30) + "px"
                     });
                 }
             }
