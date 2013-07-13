@@ -51,12 +51,18 @@ body input.folder-input {
     border-radius: 6px;
     width: 200px;
 }
+.file-list .nav-list li:first-child a {
+    border-radius: 6px 6px 0 0;
+}
+.file-list .nav-list li:last-child a {
+    border-radius: 0 0 6px 6px;
+}
 .file-list .nav-list li {
     line-height: 15px;
 }
 .file-list .nav-list li a {
     border: 1px solid #e5e5e5;
-    margin: 0 0 -1px;
+    margin: 0 0 -1px 0;
     padding: 8px 14px;
     font-size: 11px;
 }
@@ -73,3 +79,16 @@ body input.folder-input {
     margin-top: 0;
     margin-right: -8px;
 }
+
+.file-list .new-file-buttons {
+    width: 100%;
+    -webkit-transform: scale(0.9);
+}
+.file-list .new-file-buttons .btn {
+    left: 50%;
+    margin: 7px 0 0 -20px;
+}
+
+
+
+

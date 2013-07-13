@@ -2,16 +2,20 @@ define(function (require, exports, module) {
     "use strict";
 
     var Backbone = require("backbone"),
-        Handlebars = require("handlebars");
+        Handlebars = require("handlebars"),
+        $ = require("jquery");
 
     var path = require("utils/path"),
-        animate = require("utils/animate");
+        shell = require("utils/shell"),
+        animate = require("utils/animate"),
+        debug = require("utils/debug")("views/file-list");
 
     module.exports = Backbone.View.extend({
         className: "file-list",
         folderInputTemplate: Handlebars.compile(require("text!templates/folder-input.html")),
         fileListTemplate: Handlebars.compile(require("text!templates/file-list.html")),
         folderUpButtonTemplate: Handlebars.compile(require("text!templates/folder-up-button.html")),
+        newFileButtonsTemplate: Handlebars.compile(require("text!templates/new-file-buttons.html")),
 
         initialize: function () {
             this.listenTo(this.collection, "reset", this.render);
@@ -40,6 +44,34 @@ define(function (require, exports, module) {
                 var upFolder = path.upFolder(this.$(".folder-input").val());
                 if (upFolder) {
                     this.model.set("folderPath", upFolder);
+                }
+            },
+            
+            "click .new-file-button": function () {
+                var _this = this,
+                    el = $(event.target).closest(".new-file-button"),
+                    icon = el.find("i");
+                    
+                el.addClass("btn-primary");
+                icon.addClass("icon-white");
+                
+                var fileName = prompt("Enter a file name:");
+                if (fileName) {
+                    var filePath = path.join(_this.model.get("folderPath"), fileName);
+                    shell.saveFile(filePath, "", function (res) {
+                        if (res.success) {
+                            _this.collection.push({
+                                fileName: fileName,
+                                isFolder: false
+                            });
+                            _this.model.set("filePath", filePath);
+                        } else {
+                            debug("Could not create file: " + fileName);
+                        }
+                    });
+                } else {
+                    el.removeClass("btn-primary");
+                    icon.removeClass("icon-white");
                 }
             }
         },
@@ -87,6 +119,7 @@ define(function (require, exports, module) {
                 el.append(_this.fileListTemplate({
                     files: items.toJSON()
                 }));
+                el.append(_this.newFileButtonsTemplate());
 
                 var fileListEl = _this.$el.find(".nav-list");
                 if (fileListEl.height() > 500) {

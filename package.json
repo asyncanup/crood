@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git://github.com/anupbishnoi/crood"
   },
-  "main": "index",
+  "main": "server",
   "scripts": {
     "prepublish": "npm prune",
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,5 +1,6 @@
 var shell = require("shelljs"),
-    debug = require("debug")("crood");
+    debug = require("debug")("crood"),
+    path = require("path");
 
 var exposedCommands = [
     "cat",
@@ -37,16 +38,17 @@ module.exports = function (app) {
     });
 
     app.post("/save", function (req, res) {
-        var path = req.query.path;
+        var filePath = req.query.filePath;
 
         try {
-            shell.echo(req.body.data).to(path);
-            debug(">> Saving to file: " + path);
+            debug("Saving to file: " + filePath);
+            shell.echo(req.body.data).to(filePath);
             res.json({ success: true });
         } catch (err) {
-            debug("Error writing file to disk: " + path);
+            debug("Error writing file to disk: " + filePath);
             res.json({ success: false });
         }
-
     });
+    
 };
+

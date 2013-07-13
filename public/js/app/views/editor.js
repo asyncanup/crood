@@ -7,7 +7,8 @@ define(function (require, exports, module) {
         ace = require("ace/ace"),
         animate = require("utils/animate"),
         debug = require("utils/debug")("views/editor"),
-        path = require("utils/path");
+        path = require("utils/path"),
+        shell = require("utils/shell");
 
     var editorElementId = "editor";
 
@@ -163,7 +164,18 @@ define(function (require, exports, module) {
                         name: "saveFile",
                         bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
                         exec: function(editor) {
-                            _this.saveFile();
+                            var filePath = _this.model.get("filePath"),
+                                contents = _this.aceEditor.getValue();
+                                
+                            shell.saveFile(filePath, contents, function (res){
+                                if (res.success) {
+                                    debug("File saved: " + filePath);
+                                    animate.saveSuccessful(_this.$el);
+                                } else {
+                                    debug("Could not save file to disk: " + filePath);
+                                    animate.saveFailure(_this.$el);
+                                }
+                            });
                         },
                         readOnly: true // false if this command should not apply in readOnly mode
                     });
@@ -174,26 +186,6 @@ define(function (require, exports, module) {
                     debug(err.message, err.stack);
                 }
             });
-        },
-
-        saveFile: function () {
-            var _this = this,
-                filePath = this.model.get("filePath");
-            
-            $.post(
-                "save?path=" + filePath,
-                { data: this.aceEditor.getValue() },
-                function (res){
-                    if (res.success) {
-                        debug("File saved: " + filePath);
-                        animate.saveSuccessful(_this.$el);
-                    } else {
-                        debug("Could not save file to disk: " + filePath);
-                        animate.saveFailure(_this.$el);
-                    }
-                },
-                "json"
-            );
         },
 
         render: function () {

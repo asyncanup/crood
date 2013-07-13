@@ -1,7 +1,9 @@
 define(function (require, exports, module) {
     "use strict";
 
-    var Backbone = require("backbone");
+    var Backbone = require("backbone"),
+        $ = require("jquery"),
+        _ = require("underscore");
     
     var EditorView = require("views/editor"),
         FileListView = require("views/file-list");
@@ -16,12 +18,8 @@ define(function (require, exports, module) {
             var editorModel = window.editorModel = this.editorModel = new EditorModel();
             editorModel.updateFromQueryString();
 
-            $(window).on("popstate", function () {
-                editorModel.updateFromQueryString();
-            });
-            editorModel.on("change:filePath change:folderPath", function () {
-                editorModel.updateQueryString();
-            });
+            $(window).on("popstate", editorModel.updateFromQueryString.bind(editorModel));
+            editorModel.on("change:filePath change:folderPath", editorModel.updateQueryString.bind(editorModel));
 
             this.editor = new EditorView({
                 model: this.editorModel
@@ -31,7 +29,7 @@ define(function (require, exports, module) {
             this.fileList = new FileListView({
                 model: this.editorModel,
                 collection: this.fileListCollection
-            })
+            });
         },
 
         render: function () {

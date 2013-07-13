@@ -7,6 +7,7 @@ TODO
 * Still haven't figured out the border-radius of .file-list yet
 * Change .file-list's name (to .sidebar maybe)
 * Clicking on inaccessible folder messes up folderPath
+* Back button takes 2 clicks
 
 
 ## Features
