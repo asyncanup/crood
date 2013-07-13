@@ -12,29 +12,44 @@ body {
     right: 0;
 }
 
+div.visible {
+    opacity: 1;
+}
+
 body input.folder-input {
     width: 186px;
     font-size: 11px;
 }
 
-.folder-up-button {
-    border-radius: 10px;
-    width: 20px;
-    height: 20px;
+.file-list-action-button {
+    height: 22px;
+    width: 22px;
+    border-radius: 11px;
+    border: 1px solid;
+    padding: 0;
     position: absolute;
-    top: 4px;
-    border: 1px solid rgb(0, 0, 0);
+    margin: 1px;
     left: -30px;
-    cursor: pointer;
     opacity: 0.6;
-    background: white;
+    -webkit-transition: opacity 0.2s ease;
+}
+.file-list-action-button i {
+    margin-left: 2px;
 }
 
-.folder-up-button:hover {
-    opacity: 1;
+.file-list .new-file-button {
+    top: 44px;
 }
-.folder-up-button .icon-chevron-left {
-    margin-left: 3px;
+.file-list .new-file-button.empty-list {
+    left: 44px;
+}
+
+.file-list .folder-up-button {
+    top: 4px;
+}
+
+.file-list-action-button:hover {
+    opacity: 1;
 }
 
 .file-list {
@@ -42,6 +57,12 @@ body input.folder-input {
     position: absolute;
     top: 7px;
     right: 22px;
+    opacity: 0.3;
+    -webkit-transition: opacity 0.2s ease;
+    -webkit-transform: translate3d(0, 0, 0);
+}
+.file-list:hover {
+    opacity: 1;
 }
 
 .file-list .nav-list {
@@ -50,45 +71,35 @@ body input.folder-input {
     padding: 0;
     border-radius: 6px;
     width: 200px;
+    overflow-x: hidden;
 }
 .file-list .nav-list li:first-child a {
     border-radius: 6px 6px 0 0;
 }
 .file-list .nav-list li:last-child a {
     border-radius: 0 0 6px 6px;
+    border-top: 0;
 }
 .file-list .nav-list li {
     line-height: 15px;
 }
 .file-list .nav-list li a {
     border: 1px solid #e5e5e5;
-    margin: 0 0 -1px 0;
+    margin: 0;
     padding: 8px 14px;
     font-size: 11px;
+    -webkit-transition: background-color 0.2s ease;
 }
-.file-list .nav-list .active .icon-chevron-right,
-.file-list .nav-list .active a:hover .icon-chevron-right {
-    background-image: url(../img/glyphicons-halflings-white.png);
+.file-list .nav-list .active .icon-chevron-right {
+    background-image: url(lib/bootstrap/img/glyphicons-halflings-white.png);
     opacity: 1;
 }
-.file-list .nav-list a .icon-chevron-right {
-    opacity: .5;
-}
-.file-list .nav-list .icon-chevron-right {
+.file-list .nav-list li .icon-chevron-right {
     float: right;
-    margin-top: 0;
-    margin-right: -8px;
+    margin-top: 9px;
+    margin-right: 7px;
+    opacity: 0.5;
+    cursor: pointer;
 }
-
-.file-list .new-file-buttons {
-    width: 100%;
-    -webkit-transform: scale(0.9);
-}
-.file-list .new-file-buttons .btn {
-    left: 50%;
-    margin: 7px 0 0 -20px;
-}
-
-
 
 
