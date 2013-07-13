@@ -122,10 +122,11 @@ define(function (require, exports, module) {
                 el.append(_this.newFileButtonsTemplate());
 
                 var fileListEl = _this.$el.find(".nav-list");
-                if (fileListEl.height() > 500) {
+                var windowHeight = $(window).height();
+                if (fileListEl.height() > windowHeight) {
                     fileListEl.css({
                         "overflow-y": "scroll",
-                        "height": "500px"
+                        "height": (windowHeight - 100) + "px"
                     });
                 }
             }
