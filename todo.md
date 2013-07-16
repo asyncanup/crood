@@ -4,7 +4,11 @@ TODO
 ## Bugs
 
 * Back button takes 2 clicks
-
+* Remove Add file button when no folderPath
+* Add Humane for error notifications
+* Make the folder animation work with simultaneous divs, instead of content replacement
+* New Folder button
+* on creating new file, reset associated syntax
 
 ## Features
 
