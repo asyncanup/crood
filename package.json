@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "debug": "~0.7.2",
-    "apper": "0.0.7",
+    "apper": "*",
     "underscore": "~1.5.1"
   },
   "keywords": [
