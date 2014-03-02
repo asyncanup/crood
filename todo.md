@@ -32,3 +32,9 @@ TODO
 * Make an installable component that enables a hosted version of this to save to local
 * Keyboard shortcut to open another window with the same folder and file view
 * Make the folder animation work with simultaneous divs, instead of content replacement
+* When moving up a folder, highlight the last folder for a short while
+* Scroll the folder path input box to end
+* Real-time updates from server about changes in file system
+* Show breadcrumbs below folder path
+* Show the current file name as title of page
+

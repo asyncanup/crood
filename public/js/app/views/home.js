@@ -10,6 +10,9 @@ define(function (require, exports, module) {
 
     var EditorModel = require("models/editor"),
         FileListCollection = require("models/file-list-collection");
+        
+    var path = require("utils/path"),
+        ui = require("utils/ui");
 
     module.exports = Backbone.View.extend({
         el: "body",
@@ -20,6 +23,8 @@ define(function (require, exports, module) {
 
             $(window).on("popstate", editorModel.updateFromQueryString.bind(editorModel));
             editorModel.on("change:filePath change:folderPath", editorModel.updateQueryString.bind(editorModel));
+            
+            editorModel.on("change:filePath", this.changePageTitle, this);
 
             this.editor = new EditorView({
                 model: this.editorModel
@@ -30,6 +35,14 @@ define(function (require, exports, module) {
                 model: this.editorModel,
                 collection: this.fileListCollection
             });
+        },
+        
+        changePageTitle: function (editorModel) {
+            var filePath = editorModel.get("filePath"),
+                filePathParts = filePath.split(path.getSeparator(filePath)),
+                fileName = filePathParts[filePathParts.length - 1];
+                
+            ui.changePageTitle(fileName + " - Crood");
         },
 
         render: function () {

@@ -93,7 +93,9 @@ define(function (require, exports, module) {
                         _this.enableCursorChangeHandler();
                     },
                     "left",
-                    function () { _this.$el.find("textarea").focus(); }
+                    function () {
+                        _this.$el.find("textarea").focus();
+                    }
                 );
             }
         },
