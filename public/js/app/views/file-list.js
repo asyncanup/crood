@@ -31,7 +31,7 @@ define(function (require, exports, module) {
                 timeout;
             var el = _this.$el;
             el.hover(function () {
-                _this.timeout && clearTimeout(_this.timeout);
+                if (_this.timeout) clearTimeout(_this.timeout);
                 el.addClass("visible");
             }, function () {
                 el.addClass("visible");
@@ -75,7 +75,7 @@ define(function (require, exports, module) {
                 }
             },
             
-            "click .new-file-button": function () {
+            "click .new-file-button": function (event) {
                 var _this = this,
                     el = $(event.target).closest(".new-file-button"),
                     icon = el.find("i");
