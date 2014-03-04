@@ -4,8 +4,9 @@ define(function (require, exports, module) {
     var Backbone = require("backbone"),
         _ = require("underscore"),
         $ = require("jquery"),
-        ace = require("ace/ace"),
-        animate = require("utils/animate"),
+        ace = require("ace/ace");
+
+    var animate = require("utils/animate"),
         debug = require("utils/debug")("views/editor"),
         path = require("utils/path"),
         shell = require("utils/shell");
@@ -91,6 +92,8 @@ define(function (require, exports, module) {
                         editor.moveCursorToPosition(_this.getLastCursorPosition());
 
                         _this.enableCursorChangeHandler();
+
+                        editor.getSession().setUndoManager(new ace.UndoManager());
                     },
                     "left",
                     function () {
