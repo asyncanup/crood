@@ -27,4 +27,4 @@ requirejs.config({
     }
 });
 
-require(["app/main"]);
+require(["app/router", "app/main"]);

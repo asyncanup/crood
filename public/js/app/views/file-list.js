@@ -145,7 +145,9 @@ define(function (require, exports, module) {
                 );
                 
                 el.empty();
-                _this.timeout && clearTimeout(_this.timeout);
+                if (_this.timeout) {
+                    clearTimeout(_this.timeout);
+                }
                 el.addClass("visible");
                 _this.timeout = setTimeout(function () {
                     el.removeClass("visible");
@@ -158,7 +160,11 @@ define(function (require, exports, module) {
                     folderPath: folderPath
                 }));
                 el.append(_this.fileListTemplate({
-                    files: items.toJSON()
+                    files: _.map(items.toJSON(), function (item) {
+                        item.filePath = path.join(folderPath, item.fileName);
+                        item.folderPath = folderPath;
+                        return item;
+                    })
                 }));
                 if (el.find("li").hasClass("active")) {
                     $(".ace_editor").find("textarea").focus();

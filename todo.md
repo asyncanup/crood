@@ -3,14 +3,11 @@ TODO
 
 ## Bugs
 
-* Make file links work properly, to enable Ctrl-click on a file name
 * Back button takes 2 clicks - it's because History.pushState is happening twice 
   maybe because of change:filePath and change:folderPath maybe
 * Remove Add file button when no folderPath
 * Add Humane for error notifications
-* node code/crood/server.js should work, that might be a change in apper
 * On creating new file, reset associated syntax
-* Hovering on Create New and Up Folder button shows weird transition
 
 ## Features
 
@@ -22,19 +19,12 @@ TODO
 * Plugin architecture
 * List of recent files
 * Maintain Undo history correctly across files. Maybe save that to localStorage
-* Live update
 * Options menu inside file's li element to rename, copy, etc
-* Create new File/Folder
-* Rename File/Folder
 * Drag and drop move to different folder
 * Run command in local folder's command prompt
-* Commit to git from inside this? It's possible.
 * Make an installable component that enables a hosted version of this to save to local
-* Keyboard shortcut to open another window with the same folder and file view
-* Make the folder animation work with simultaneous divs, instead of content replacement
 * When moving up a folder, highlight the last folder for a short while
 * Scroll the folder path input box to end
 * Real-time updates from server about changes in file system
 * Show breadcrumbs below folder path
-* Show the current file name as title of page
-
+* Make dragging files on top of windows work
