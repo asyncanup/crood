@@ -3,8 +3,6 @@ TODO
 
 ## Bugs
 
-* Back button takes 2 clicks - it's because History.pushState is happening twice 
-  maybe because of change:filePath and change:folderPath maybe
 * Remove Add file button when no folderPath
 * Add Humane for error notifications
 * On creating new file, reset associated syntax
