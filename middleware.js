@@ -1,3 +1,3 @@
 module.exports = function (app) {
-    app.use(app.express.bodyParser());
+	app.use(app.express.bodyParser());
 };

@@ -1,15 +1,17 @@
 {
   "name": "crood",
   "description": "Web-based code editor in node.js",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "author": {
     "name": "Anup Bishnoi",
     "email": "pixelsallover@gmail.com"
   },
   "dependencies": {
-    "debug": "~0.7.2",
+    "debug": "*",
     "apper": "*",
-    "underscore": "~1.5.1"
+    "underscore": "*",
+    "raw-body": "~1.1.3",
+    "qs": "~0.6.6"
   },
   "keywords": [
     "code editor",
