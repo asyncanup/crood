@@ -171,7 +171,7 @@ define(function (require, exports, module) {
                     });
                     _this.aceEditor.commands.addCommand({
                         name: "saveFile",
-                        bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+                        bindKey: { win: 'Ctrl-S',  mac: 'Command-S' },
                         exec: function(editor) {
                             var filePath = _this.model.get("filePath"),
                                 contents = _this.aceEditor.getValue();
