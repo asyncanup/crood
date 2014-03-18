@@ -1,8 +1,6 @@
 var fs = require("fs"),
     path = require("path"),
-    _ = require("underscore"),
-    rawBody = require("raw-body"),
-    qs = require("qs");
+    _ = require("underscore");
     
 var debug = require("debug")("crood");
 
@@ -52,22 +50,7 @@ module.exports = function (app) {
     app.post("/save", function (req, res) {
         var filePath = req.query.filePath;
 
-        if (!req.body) {
-            rawBody(req, {
-                limit: "1mb",
-                length: req.headers["content-length"],
-                encoding: "utf8"
-            }, function (err, buf) {
-                req.body = qs.parse(buf);
-                writeFile(filePath, req.body.data, res);
-            });
-        } else {
-            writeFile(filePath, req.body.data, res);
-        }
-    });
-
-    function writeFile(filePath, data, res) {
-        fs.writeFile(filePath, data, function (err) {
+        fs.writeFile(filePath, req.body.data, function (err) {
             if (err) {
                 debug("Error writing file to disk: " + filePath);
                 res.json({ success: false, err: err.message });
@@ -75,7 +58,5 @@ module.exports = function (app) {
                 res.json({ success: true });
             }
         });
-
-    }
-    
+    });
 };
