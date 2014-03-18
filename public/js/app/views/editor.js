@@ -88,12 +88,15 @@ define(function (require, exports, module) {
 
                         editor.setValue(content);
                         editor.clearSelection();
-                        editor.getSession().setScrollTop(0);
+
+                        var editorSession = editor.getSession();
+                        editorSession.setScrollTop(0);
                         editor.moveCursorToPosition(_this.getLastCursorPosition());
 
                         _this.enableCursorChangeHandler();
 
-                        editor.getSession().setUndoManager(new ace.UndoManager());
+                        // model.saveUndoManagerHistory(editorSession.)
+                        editorSession.setUndoManager(new ace.UndoManager());
                     },
                     "left",
                     function () {
