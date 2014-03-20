@@ -71,7 +71,7 @@ define(function (require, exports, module) {
                 syntaxMode = this.modes[fileExt] || fileExt;
 
             debug("Setting syntax mode to: " + syntaxMode);
-            this.aceEditor.getSession().setMode("ace/mode/" + syntaxMode);
+            this.aceEditor && this.aceEditor.getSession().setMode("ace/mode/" + syntaxMode);
         },
 
         changeContent: function (content) {

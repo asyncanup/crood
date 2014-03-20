@@ -20,6 +20,9 @@ body .folder-input {
     width: 186px;
     font-size: 11px;
 }
+body .folder-input-container {
+    margin: 0;
+}
 
 .file-list-action-button {
     height: 22px;

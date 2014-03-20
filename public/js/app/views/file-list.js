@@ -51,7 +51,16 @@ define(function (require, exports, module) {
 
         events: {
             "change .folder-input": function () {
-                this.model.set("folderPath", this.$(".folder-input").val());
+                var folderPath = this.$(".folder-input").val();
+                
+                shell.listFiles(path.addSeparatorIfNotPresent(folderPath), function (res) {
+                    if (res.success) {
+                        this.model.set("folderPath", folderPath);
+                    } else {
+                        debug("Wrong folder path in folder input: " + folderPath);
+                        this.$el.find(".folder-input-container").addClass("error");
+                    }
+                }.bind(this));
             },
             
             "click .nav-list li": function (event) {
@@ -152,9 +161,28 @@ define(function (require, exports, module) {
         },
 
         changeFolder: function () {
-            var folderPath = this.model.get("folderPath");
+            var folderPath = this.model.get("folderPath"),
+                inputContainer = this.$el.find(".folder-input").closest(".folder-input-container");
+            
             if (folderPath) {
-                this.collection.refreshFileList(folderPath);
+                shell.listFiles(path.addSeparatorIfNotPresent(folderPath), function (res) {
+                    function isFolder(file) { return file.isFolder; }
+                    
+                    if (res.success) {
+                        var files = res.data;
+                        if (!path.separator) {
+                            path.separator = res.pathSeparator;
+                        }
+    
+                        var folders = _.select(files, isFolder);
+                        var pureFiles = _.reject(files, isFolder);
+                        
+                        this.collection.reset(_.flatten([folders, pureFiles]));
+                    } else {
+                        debug("Wrong folder path: " + folderPath);
+                        this.collection.reset([]);
+                    }
+                }.bind(this));
             }
         },
 
@@ -165,7 +193,7 @@ define(function (require, exports, module) {
                 model = this.model,
                 folderPath = model.get("folderPath"),
                 filePath = model.get("filePath"),
-                previousFolderPath = model.previous("folderPath"),
+                previousFolderPath = model.previous("folderPath") || "",
                 _this = this;
 
             items.forEach(function (item) {
@@ -193,8 +221,8 @@ define(function (require, exports, module) {
                     el.append(_this.folderUpButtonTemplate({
                         upFolderPath: path.upFolder(folderPath)
                     }));
+                    el.append(_this.newFileButtonsTemplate());
                 }
-                el.append(_this.newFileButtonsTemplate());
                 el.append(_this.folderInputTemplate({
                     folderPath: folderPath
                 }));

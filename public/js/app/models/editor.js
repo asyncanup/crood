@@ -4,7 +4,9 @@ define(function (require, exports, module) {
     var Backbone = require("backbone");
 
     var path = require("utils/path"),
-        ui = require("utils/ui");
+        ui = require("utils/ui"),
+        shell = require("utils/shell"),
+        debug = require("utils/debug")("models/editor");
 
     module.exports = Backbone.Model.extend({
         defaults: {
@@ -30,8 +32,14 @@ define(function (require, exports, module) {
             if (folderPath) {
                 attributes.folderPath = folderPath;
             }
-
-            this.set(attributes);
+            
+            shell.listFiles(folderPath, function (res) {
+                if (res.success) {
+                    this.set(attributes);
+                } else {
+                    debug("Wrong folder path");
+                }
+            }.bind(this));
         }
     });
 });

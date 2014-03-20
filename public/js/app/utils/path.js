@@ -30,6 +30,13 @@ define(function (require, exports, module) {
         },
         getSeparator: function (path) {
             return this.separator || !~path.indexOf("/") ? "\\" : "/";
+        },
+        addSeparatorIfNotPresent: function (folderPath) {
+            var parts = folderPath.split(this.separator || this.getSeparator(folderPath));
+            if (parts[parts.length - 1]) {
+                folderPath = folderPath + (this.separator || this.getSeparator(folderPath));
+            }
+            return folderPath;
         }
-    }
+    };
 });

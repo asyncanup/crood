@@ -3,13 +3,11 @@ TODO
 
 ## Bugs
 
-* Remove Add file button when no folderPath
 * Add Humane for error notifications
 
 ## Features
 
 * Tests!
-* New Folder button
 * Overwriting file with unmergeable changes should alert user
 * Moving away from unsaved file must alert user
 * Chrome extension
