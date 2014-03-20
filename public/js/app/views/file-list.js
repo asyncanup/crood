@@ -55,6 +55,9 @@ define(function (require, exports, module) {
             },
             
             "click .nav-list li": function (event) {
+                if (event.metaKey || event.ctrlKey) return;
+                event.preventDefault();
+                
                 var el = this.$(event.target).closest("li"),
                     index = el.index();
 
@@ -62,7 +65,6 @@ define(function (require, exports, module) {
                 el.addClass("active");
                 el.find("i").addClass("icon-white");
                 this.selectItem(this.collection.at(index));
-                event.preventDefault();
             },
 
             "click .folder-up-button": function () {
