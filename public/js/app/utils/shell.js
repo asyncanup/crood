@@ -2,6 +2,7 @@ define(function (require, exports, module) {
     "use strict";
 
     var $ = require("jquery"),
+        path = require("utils/path"),
         debug = require("utils/debug")("utils/shell");
 
     module.exports = {
@@ -13,7 +14,7 @@ define(function (require, exports, module) {
             $.getJSON("open?filePath=" + filePath, success);
         },
         listFiles: function (folderPath, success) {
-            $.getJSON("list?folderPath=" + folderPath, success);
+            $.getJSON("list?folderPath=" + path.addSeparatorIfNotPresent(folderPath), success);
         },
         createFolder: function (folderPath, success) {
             $.post("create?folderPath=" + folderPath, success, "json");

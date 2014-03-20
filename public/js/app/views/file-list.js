@@ -53,7 +53,7 @@ define(function (require, exports, module) {
             "change .folder-input": function () {
                 var folderPath = this.$(".folder-input").val();
                 
-                shell.listFiles(path.addSeparatorIfNotPresent(folderPath), function (res) {
+                shell.listFiles(folderPath, function (res) {
                     if (res.success) {
                         this.model.set("folderPath", folderPath);
                     } else {
@@ -165,7 +165,7 @@ define(function (require, exports, module) {
                 inputContainer = this.$el.find(".folder-input").closest(".folder-input-container");
             
             if (folderPath) {
-                shell.listFiles(path.addSeparatorIfNotPresent(folderPath), function (res) {
+                shell.listFiles(folderPath, function (res) {
                     function isFolder(file) { return file.isFolder; }
                     
                     if (res.success) {
