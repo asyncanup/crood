@@ -180,7 +180,10 @@ define(function (require, exports, module) {
                 if (!items.length) {
                     el.find(".new-file-button").addClass("centered");
                 }
-
+                
+                var folderInputEl = el.find(".folder-input")[0];
+                folderInputEl.scrollLeft = folderInputEl.scrollWidth
+                
                 var fileListEl = el.find(".nav-list"),
                     windowHeight = $(window).height(),
                     availableHeight = (

@@ -22,7 +22,6 @@ TODO
 * Run command in local folder's command prompt
 * Make an installable component that enables a hosted version of this to save to local
 * When moving up a folder, highlight the last folder for a short while
-* Scroll the folder path input box to end
 * Real-time updates from server about changes in file system
 * Show breadcrumbs below folder path
 * Make dragging files on top of windows work
