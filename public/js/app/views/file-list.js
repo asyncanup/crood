@@ -158,7 +158,9 @@ define(function (require, exports, module) {
                     el.removeClass("visible");
                 }, 2000);
                 if (folderPath) {
-                    el.append(_this.folderUpButtonTemplate());
+                    el.append(_this.folderUpButtonTemplate({
+                        upFolderPath: path.upFolder(folderPath)
+                    }));
                 }
                 el.append(_this.newFileButtonsTemplate());
                 el.append(_this.folderInputTemplate({

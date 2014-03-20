@@ -45,6 +45,7 @@ body input.folder-input {
 
 .file-list .folder-up-button {
     top: 4px;
+    transform: scale(0.9);
 }
 
 .file-list-action-button:hover {
