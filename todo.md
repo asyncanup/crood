@@ -26,6 +26,5 @@ TODO
 * Real-time updates from server about changes in file system
 * Show breadcrumbs below folder path
 * Make dragging files on top of windows work
-* Middle clicking on folder opens wrong path
 * When no filePath, set folderPath in title
 * Middle click on Up button should open the folder
