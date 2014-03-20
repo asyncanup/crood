@@ -6,7 +6,8 @@ define(function (require, exports, module) {
         _ = require("underscore");
         
     var debug = require("utils/debug")("models/file-list-collection"),
-        path = require("utils/path");
+        path = require("utils/path"),
+        shell = require("utils/shell");
 
     function addSeparatorIfNotPresent(folderPath) {
         var parts = folderPath.split(path.separator || path.getSeparator(folderPath));
@@ -19,7 +20,7 @@ define(function (require, exports, module) {
     module.exports = Backbone.Collection.extend({
         refreshFileList: function (folderPath) {
             var coll = this;
-            $.getJSON("list?folderPath=" + addSeparatorIfNotPresent(folderPath), function (res) {
+            shell.listFiles(addSeparatorIfNotPresent(folderPath), function (res) {
                 function isFolder(file) { return file.isFolder; }
                 
                 if (res.success) {

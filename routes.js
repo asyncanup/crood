@@ -59,4 +59,17 @@ module.exports = function (app) {
             }
         });
     });
+    
+    app.post("/create", function (req, res) {
+        var folderPath = req.query.folderPath;
+        
+        fs.mkdir(folderPath, function (err) {
+            if (err) {
+                debug("Error creating folder at: " + folderPath);
+                res.json({ success: false, err: err.message });
+            } else {
+                res.json({ success: true });
+            }
+        });
+    });
 };

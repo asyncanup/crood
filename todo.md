@@ -24,3 +24,4 @@ TODO
 * Real-time updates from server about changes in file system
 * Show breadcrumbs below folder path
 * Make dragging files on top of windows work
+* Make /create create new files as well as folders

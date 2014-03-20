@@ -81,32 +81,64 @@ define(function (require, exports, module) {
             },
             
             "click .new-file-button": function (event) {
-                var _this = this,
-                    el = $(event.target).closest(".new-file-button"),
+                var el = $(event.target).closest(".new-file-button"),
                     icon = el.find("i");
-                    
-                el.addClass("btn-primary");
-                icon.addClass("icon-white");
+                
+                this.selectButton(el);
                 
                 var fileName = prompt("Enter a file name:");
                 if (fileName) {
-                    var filePath = path.join(_this.model.get("folderPath"), fileName);
+                    var filePath = path.join(this.model.get("folderPath"), fileName);
                     shell.saveFile(filePath, "", function (res) {
                         if (res.success) {
-                            _this.collection.push({
+                            this.collection.push({
                                 fileName: fileName,
                                 isFolder: false
                             });
-                            _this.model.set("filePath", filePath);
+                            this.model.set("filePath", filePath);
                         } else {
                             debug("Could not create file: " + fileName);
                         }
-                    });
+                    }.bind(this));
                 } else {
-                    el.removeClass("btn-primary");
-                    icon.removeClass("icon-white");
+                    this.unSelectButton(el);
+                }
+            },
+            
+            "click .new-folder-button": function (event) {
+                var el = $(event.target).closest(".new-folder-button"),
+                    icon = el.find("i");
+                    
+                this.selectButton(el);
+                
+                var folderName = prompt("Enter a folder name:");
+                if (folderName) {
+                    var folderPath = path.join(this.model.get("folderPath"), folderName);
+                    shell.createFolder(folderPath, function (res) {
+                        if (res.success) {
+                            // this.collection.push({
+                            //     fileName: folderName,
+                            //     isFolder: true
+                            // });
+                            this.model.set("folderPath", folderPath);
+                        } else {
+                            debug("Could not create folder: " + folderName);
+                        }
+                    }.bind(this));
+                } else {
+                    this.unSelectButton(el);
                 }
             }
+        },
+        
+        selectButton: function (btn) {
+            btn.addClass("btn-primary");
+            btn.find("i").addClass("icon-white");
+        },
+        
+        unSelectButton: function (btn) {
+            btn.removeClass("btn-primary");
+            btn.find("i").removeClass("icon-white");
         },
 
         selectItem: function (fileItem) {
@@ -179,10 +211,11 @@ define(function (require, exports, module) {
                 
                 if (!items.length) {
                     el.find(".new-file-button").addClass("centered");
+                    el.find(".new-folder-button").addClass("centered");
                 }
                 
                 var folderInputEl = el.find(".folder-input")[0];
-                folderInputEl.scrollLeft = folderInputEl.scrollWidth
+                folderInputEl.scrollLeft = folderInputEl.scrollWidth;
                 
                 var fileListEl = el.find(".nav-list"),
                     windowHeight = $(window).height(),

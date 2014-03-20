@@ -40,7 +40,16 @@ body .folder-input {
 }
 .file-list .new-file-button.centered {
     left: 50%;
-    margin-left: -10px;
+    margin-left: -24px;
+}
+
+.file-list .new-folder-button {
+    top: 74px;
+}
+.file-list .new-folder-button.centered {
+    left: 50%;
+    margin-left: 4px;
+    top: 44px;
 }
 
 .file-list .folder-up-button {

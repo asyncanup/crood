@@ -60,7 +60,7 @@ define(function (require, exports, module) {
 
             debug("Fetching file: " + filePath);
             var model = this.model;
-            $.getJSON("open?filePath=" + filePath, function (res) {
+            shell.openFile(filePath, function (res) {
                 debug("File data successfully fetched!");
                 _this.changeContent(res.data);
             });
