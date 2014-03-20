@@ -67,7 +67,10 @@ define(function (require, exports, module) {
                 this.selectItem(this.collection.at(index));
             },
 
-            "click .folder-up-button": function () {
+            "click .folder-up-button": function (event) {
+                if (event.metaKey || event.ctrlKey) return;
+                event.preventDefault();
+                
                 var el = this.$(".folder-up-button");
                 var upFolder = path.upFolder(this.$(".folder-input").val());
                 if (upFolder) {

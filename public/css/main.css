@@ -28,10 +28,8 @@ body input.folder-input {
     border: 1px solid;
     padding: 0;
     position: absolute;
-    margin: 1px;
-    left: -30px;
+    left: -27px;
     opacity: 0.6;
-    -webkit-transition: opacity 0.2s ease;
 }
 .file-list-action-button i {
     margin-left: 2px;
@@ -59,9 +57,9 @@ body input.folder-input {
     top: 7px;
     right: 22px;
     opacity: 0.3;
-    -webkit-transition: opacity 0.2s ease;
-    -webkit-transform: translate3d(0, 0, 0);
-    -webkit-transform-origin: top;
+    transition: opacity 0.2s ease;
+    transform: translate3d(0, 0, 0);
+    transform-origin: top;
 }
 .file-list:hover {
     opacity: 1;
@@ -90,7 +88,7 @@ body input.folder-input {
     margin: 0;
     padding: 8px 14px;
     font-size: 11px;
-    -webkit-transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease;
 }
 .file-list .nav-list .active .icon-chevron-right {
     background-image: url(lib/bootstrap/img/glyphicons-halflings-white.png);
