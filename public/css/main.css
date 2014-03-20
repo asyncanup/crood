@@ -12,11 +12,11 @@ body {
     right: 0;
 }
 
-div.visible {
+body .visible {
     opacity: 1;
 }
 
-body input.folder-input {
+body .folder-input {
     width: 186px;
     font-size: 11px;
 }
