@@ -5,7 +5,6 @@ TODO
 
 * Remove Add file button when no folderPath
 * Add Humane for error notifications
-* On creating new file, reset associated syntax
 
 ## Features
 
