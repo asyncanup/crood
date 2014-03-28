@@ -80,7 +80,7 @@ define(function (require, exports, module) {
                 _this = this;
 
             if (content !== editor.getValue()) {
-                debug("Changing content");
+                debug("Changing content to length: " + content.length);
                 animate.slideOutIn(
                     contentArea,
                     function () {

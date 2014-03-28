@@ -4,6 +4,10 @@ TODO
 ## Bugs
 
 * Add Humane for error notifications
+* The folder input shows and then goes away on page load
+* The syntax colors didn't show once, because editor wasn't defined in line:
+  if (content !== editor.getValue()) {
+* The whole page goes white after showing an empty page first
 
 ## Features
 
