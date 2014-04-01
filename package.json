@@ -7,9 +7,9 @@
     "email": "pixelsallover@gmail.com"
   },
   "dependencies": {
-    "debug": "*",
+    "debug": "0.7.2",
     "apper": "2.2.2",
-    "underscore": "*"
+    "underscore": "1.5.1"
   },
   "keywords": [
     "code editor",
