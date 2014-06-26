@@ -22,13 +22,18 @@
     "url": "git://github.com/anupbishnoi/crood"
   },
   "main": "server",
+  "bin": {
+      "crood": "./bin/crood"
+  },
   "scripts": {
     "prepublish": "npm prune",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
-  "engines": {
-    "node": "*"
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "bugs": {
+    "url": "https://github.com/anupbishnoi/crood/issues"
   },
-  "license": "MIT"
+  "homepage": "https://github.com/anupbishnoi/crood"
 }
