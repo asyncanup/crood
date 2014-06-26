@@ -1,15 +1,16 @@
 {
   "name": "crood",
   "description": "Web-based code editor in node.js",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "author": {
     "name": "Anup Bishnoi",
     "email": "pixelsallover@gmail.com"
   },
   "dependencies": {
     "debug": "0.7.2",
-    "apper": "2.2.2",
-    "underscore": "1.5.1"
+    "apper": "2.3.0",
+    "underscore": "1.5.1",
+    "minimist": "0.2.0"
   },
   "keywords": [
     "code editor",
@@ -23,7 +24,7 @@
   },
   "main": "server",
   "bin": {
-      "crood": "./bin/crood"
+    "crood": "./bin/crood"
   },
   "scripts": {
     "prepublish": "npm prune",
