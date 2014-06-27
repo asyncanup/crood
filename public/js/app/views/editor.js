@@ -3,8 +3,7 @@ define(function (require, exports, module) {
 
     var Backbone = require("backbone"),
         _ = require("underscore"),
-        $ = require("jquery"),
-        ace = require("ace/ace");
+        $ = require("jquery");
 
     var animate = require("utils/animate"),
         debug = require("utils/debug")("views/editor"),
@@ -150,50 +149,46 @@ define(function (require, exports, module) {
         initializeAceEditor: function () {
             var _this = this;
             _.defer(function () {
-                try {
-                    debug("Initializing Ace editor on div: #" + _this.elementId);
-                    _this.$el.hide();
-                    _this.aceEditor = window.editor = window.ace.edit(_this.elementId); // using window.ace here is a hack
+                debug("Initializing Ace editor on div: #" + _this.elementId);
+                _this.$el.hide();
+                _this.aceEditor = window.editor = window.ace.edit(_this.elementId); // using window.ace here is a hack
 
-                    if (_this.model.get("filePath")) {
-                        _this.loadFile();
-                    } else {
-                        _this.aceEditor.setValue(_this.helpContent);
-                    }
-                    
-                    _this.aceEditor.clearSelection();
-                    _this.aceEditor.gotoLine(1);
-                    _this.setTheme();
-                    _this.aceEditor.getSession().selection.on("changeCursor", function (e) {
-                        if (_this.isCursorChangeHandlerActive) {
-                            _this.setLastCursorPosition();
-                        }
-                    });
-                    _this.aceEditor.commands.addCommand({
-                        name: "saveFile",
-                        bindKey: { win: 'Ctrl-S',  mac: 'Command-S' },
-                        exec: function(editor) {
-                            var filePath = _this.model.get("filePath"),
-                                contents = _this.aceEditor.getValue();
-                                
-                            shell.saveFile(filePath, contents, function (res){
-                                if (res.success) {
-                                    debug("File saved: " + filePath);
-                                    animate.saveSuccessful(_this.$el);
-                                } else {
-                                    debug("Could not save file to disk: " + filePath);
-                                    animate.saveFailure(_this.$el);
-                                }
-                            });
-                        },
-                        readOnly: true // false if this command should not apply in readOnly mode
-                    });
-
-                    _this.$el.fadeIn();
-                    _this.trigger("initialized");
-                } catch (err) {
-                    debug(err.message, err.stack);
+                if (_this.model.get("filePath")) {
+                    _this.loadFile();
+                } else {
+                    _this.aceEditor.setValue(_this.helpContent);
                 }
+                
+                _this.aceEditor.clearSelection();
+                _this.aceEditor.gotoLine(1);
+                _this.setTheme();
+                _this.aceEditor.getSession().selection.on("changeCursor", function (e) {
+                    if (_this.isCursorChangeHandlerActive) {
+                        _this.setLastCursorPosition();
+                    }
+                });
+                _this.aceEditor.commands.addCommand({
+                    name: "saveFile",
+                    bindKey: { win: 'Ctrl-S',  mac: 'Command-S' },
+                    exec: function(editor) {
+                        var filePath = _this.model.get("filePath"),
+                            contents = _this.aceEditor.getValue();
+                            
+                        shell.saveFile(filePath, contents, function (res){
+                            if (res.success) {
+                                debug("File saved: " + filePath);
+                                animate.saveSuccessful(_this.$el);
+                            } else {
+                                debug("Could not save file to disk: " + filePath);
+                                animate.saveFailure(_this.$el);
+                            }
+                        });
+                    },
+                    readOnly: true // false if this command should not apply in readOnly mode
+                });
+
+                _this.$el.fadeIn();
+                _this.trigger("initialized");
             });
         },
 
