@@ -18,9 +18,6 @@ requirejs.config({
         "underscore": {
             exports: "_"
         },
-        "ace/ace": {
-            exports: "ace"
-        },
         "handlebars": {
             exports: "Handlebars"
         }

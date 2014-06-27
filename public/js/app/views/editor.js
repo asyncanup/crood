@@ -96,7 +96,7 @@ define(function (require, exports, module) {
                         _this.enableCursorChangeHandler();
 
                         // model.saveUndoManagerHistory(editorSession.)
-                        editorSession.setUndoManager(new ace.UndoManager());
+                        editorSession.setUndoManager(new window.ace.UndoManager());
                     },
                     "left",
                     function () {
@@ -153,7 +153,7 @@ define(function (require, exports, module) {
                 try {
                     debug("Initializing Ace editor on div: #" + _this.elementId);
                     _this.$el.hide();
-                    _this.aceEditor = window.editor = ace.edit(_this.elementId);
+                    _this.aceEditor = window.editor = window.ace.edit(_this.elementId); // using window.ace here is a hack
 
                     if (_this.model.get("filePath")) {
                         _this.loadFile();
