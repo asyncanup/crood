@@ -21,6 +21,7 @@ define(function (require, exports, module) {
             var editorModel = window.editorModel = this.editorModel = new EditorModel();
 
             editorModel.updateFromQueryString();
+            this.changePageTitle(editorModel);
             
             $(window).on("popstate", editorModel.updateFromQueryString.bind(editorModel));
             editorModel.on("change:filePath change:folderPath", function () {
@@ -44,8 +45,8 @@ define(function (require, exports, module) {
             var filePath = editorModel.get("filePath"),
                 filePathParts = filePath.split(path.getSeparator(filePath)),
                 fileName = filePathParts[filePathParts.length - 1];
-                
-            ui.changePageTitle(fileName + " - Crood");
+            
+            ui.changePageTitle(fileName ? fileName + " - Crood" : "Crood Editor");
         },
 
         render: function () {
