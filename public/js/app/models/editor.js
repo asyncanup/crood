@@ -19,27 +19,12 @@ define(function (require, exports, module) {
         updateFromQueryString: function () {
             var attributes = {};
             var filePath = ui.getQueryStringParameter("filePath"),
-                folderPath = ui.getQueryStringParameter("folderPath");
+                folderPath = ui.getQueryStringParameter("folderPath") || path.upFolder(filePath);
 
-            if (filePath) {
-                attributes.filePath = filePath;
-
-                if (!folderPath) {
-                    attributes.folderPath = path.upFolder(filePath);
-                }
-            }
-
-            if (folderPath) {
-                attributes.folderPath = folderPath;
-            }
+            if (filePath) attributes.filePath = filePath;
+            if (folderPath) attributes.folderPath = folderPath;
             
-            shell.listFiles(folderPath, function (res) {
-                if (res.success) {
-                    this.set(attributes);
-                } else {
-                    debug("Wrong folder path");
-                }
-            }.bind(this));
+            this.set(attributes);
         }
     });
 });

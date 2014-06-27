@@ -5,6 +5,7 @@ define(function (require, exports, module) {
     
     $(document).on("dragover", function (event) {
         event.preventDefault();
+        event.stopPropagation();
     });
     
     $(function () {

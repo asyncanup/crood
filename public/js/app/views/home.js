@@ -20,6 +20,8 @@ define(function (require, exports, module) {
         initialize: function () {
             var editorModel = window.editorModel = this.editorModel = new EditorModel();
 
+            editorModel.updateFromQueryString();
+            
             $(window).on("popstate", editorModel.updateFromQueryString.bind(editorModel));
             editorModel.on("change:filePath change:folderPath", function () {
                 ui.updateQueryString(editorModel.toJSON());
@@ -27,8 +29,6 @@ define(function (require, exports, module) {
             
             editorModel.on("change:filePath", this.changePageTitle, this);
 
-            editorModel.updateFromQueryString();
-            
             this.editor = new EditorView({
                 model: this.editorModel
             });
