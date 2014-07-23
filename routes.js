@@ -16,8 +16,7 @@ module.exports = function (app) {
             }
             
             if (err) {
-                debug("Couldn't read folder path: " + folderPath);
-                res.json({ success: false, err: err.message });
+                res.jsonError("Couldn't read folder path: " + folderPath);
             } else if (!fileNames.length) {
                 finalCallback();
             } else {
@@ -39,8 +38,7 @@ module.exports = function (app) {
         var filePath = req.query.filePath;
         fs.readFile(filePath, function (err, data) {
             if (err) {
-                debug("Error reading file from disk: " + filePath);
-                res.json({ success: false, err: err.message });
+                res.jsonError("Error reading file from disk: " + filePath);
             } else {
                 res.json({ success: true, data: data.toString() });
             }
@@ -52,8 +50,7 @@ module.exports = function (app) {
 
         fs.writeFile(filePath, req.body.data, function (err) {
             if (err) {
-                debug("Error writing file to disk: " + filePath);
-                res.json({ success: false, err: err.message });
+                res.jsonError("Error writing file to disk: " + filePath);
             } else {
                 res.json({ success: true });
             }
@@ -65,8 +62,7 @@ module.exports = function (app) {
         
         fs.mkdir(folderPath, function (err) {
             if (err) {
-                debug("Error creating folder at: " + folderPath);
-                res.json({ success: false, err: err.message });
+                res.jsonError("Error creating folder at: " + folderPath);
             } else {
                 res.json({ success: true });
             }
