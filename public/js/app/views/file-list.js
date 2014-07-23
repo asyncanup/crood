@@ -9,7 +9,9 @@ define(function (require, exports, module) {
     var path = require("utils/path"),
         shell = require("utils/shell"),
         animate = require("utils/animate"),
-        debug = require("utils/debug")("views/file-list");
+        debug = require("utils/debug")(module.id),
+        notify = require("utils/notify"),
+        ui = require("utils/ui");
 
     module.exports = Backbone.View.extend({
         className: "file-list",
@@ -53,14 +55,7 @@ define(function (require, exports, module) {
             "change .folder-input": function () {
                 var folderPath = this.$(".folder-input").val();
                 
-                shell.listFiles(folderPath, function (res) {
-                    if (res.success) {
-                        this.model.set("folderPath", folderPath);
-                    } else {
-                        debug("Wrong folder path in folder input: " + folderPath);
-                        this.$el.find(".folder-input-container").addClass("error");
-                    }
-                }.bind(this));
+                this.model.set("folderPath", folderPath);
             },
             
             "click .nav-list li": function (event) {
@@ -99,16 +94,15 @@ define(function (require, exports, module) {
                 if (fileName) {
                     var filePath = path.join(this.model.get("folderPath"), fileName);
                     shell.saveFile(filePath, "", function (res) {
-                        if (res.success) {
-                            this.collection.push({
-                                fileName: fileName,
-                                isFolder: false
-                            });
-                            this.model.set("filePath", filePath);
-                        } else {
-                            debug("Could not create file: " + fileName);
-                        }
-                    }.bind(this));
+                        this.collection.push({
+                            fileName: fileName,
+                            isFolder: false
+                        });
+                        this.model.set("filePath", filePath);
+                    }, function (err) {
+                        notify.error(err.responseText);
+                        this.unSelectButton(el);
+                    }, this);
                 } else {
                     this.unSelectButton(el);
                 }
@@ -124,16 +118,11 @@ define(function (require, exports, module) {
                 if (folderName) {
                     var folderPath = path.join(this.model.get("folderPath"), folderName);
                     shell.createFolder(folderPath, function (res) {
-                        if (res.success) {
-                            // this.collection.push({
-                            //     fileName: folderName,
-                            //     isFolder: true
-                            // });
-                            this.model.set("folderPath", folderPath);
-                        } else {
-                            debug("Could not create folder: " + folderName);
-                        }
-                    }.bind(this));
+                        this.model.set("folderPath", folderPath);
+                    }, function (err) {
+                        notify.error(err.responseText);
+                        this.unSelectButton(el);
+                    }, this);
                 } else {
                     this.unSelectButton(el);
                 }
@@ -161,33 +150,23 @@ define(function (require, exports, module) {
         },
 
         changeFolder: function () {
-            var folderPath = this.model.get("folderPath"),
-                inputContainer = this.$el.find(".folder-input").closest(".folder-input-container");
+            var folderPath = this.model.get("folderPath");
             
             if (folderPath) {
-                shell.listFiles(folderPath, function (res) {
+                shell.listFiles(folderPath, function (files) {
                     function isFolder(file) { return file.isFolder; }
+                    var folders = _.select(files, isFolder),
+                        pureFiles = _.reject(files, isFolder);
                     
-                    if (res.success) {
-                        var files = res.data;
-                        if (!path.separator) {
-                            path.separator = res.pathSeparator;
-                        }
-    
-                        var folders = _.select(files, isFolder);
-                        var pureFiles = _.reject(files, isFolder);
-                        
-                        this.collection.reset(_.flatten([folders, pureFiles]));
-                    } else {
-                        debug("Wrong folder path: " + folderPath);
-                        this.collection.reset([]);
-                    }
-                }.bind(this));
+                    this.collection.reset(_.flatten([folders, pureFiles]));
+                }, function (err) {
+                    notify.error(err.responseText);
+                    this.collection.reset([]);
+                }, this);
             }
         },
 
         render: function () {
-            // TODO: animate
             var el = this.$el,
                 items = this.collection,
                 model = this.model,

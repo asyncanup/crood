@@ -24,13 +24,14 @@ define(function (require, exports, module) {
             : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
 
-    function updateQueryString(data) {
+    function updateQueryString(data, isReplace) {
         var filePath = data.filePath,
-            folderPath = data.folderPath;
+            folderPath = data.folderPath,
+            action = isReplace ? "replaceState" : "pushState";
 
         if (getQueryStringParameter("filePath") !== data.filePath ||
                 getQueryStringParameter("folderPath") !== data.folderPath) {
-            window.history.pushState(
+            window.history[action](
                 {},
                 "",
                 "?filePath=" + filePath + "&folderPath=" + folderPath

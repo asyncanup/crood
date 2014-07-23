@@ -8,16 +8,6 @@ requirejs.config({
         utils: "../app/utils"
     },
     shim: {
-        "backbone": {
-            deps: [
-                "underscore",
-                "jquery"
-            ],
-            exports: "Backbone"
-        },
-        "underscore": {
-            exports: "_"
-        },
         "handlebars": {
             exports: "Handlebars"
         }

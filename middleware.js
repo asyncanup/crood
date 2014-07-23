@@ -1,19 +1,11 @@
-var path = require("path");
+var path = require("path"),
+    debug = require("debug")("crood");
 
 module.exports = function (app) {
 	app.use(app.express.bodyParser());
 	
 	app.use(function (req, res, next) {
-	    res.jsonError = res.jsonError || function (msg) {
-	        app.log(msg);
-	        res.json({ success: false, err: msg });
-	    };
-	    next();
-	});
-	
-	app.use(function (req, res, next) {
 	    var root = app.get("root");
-	    if (!root) res.jsonError("No document root defined in application.");
         
         var err;
         ["filePath", "folderPath"].forEach(function (resourcePath) {
@@ -25,7 +17,11 @@ module.exports = function (app) {
             }
         });
         
-        if (err) res.jsonError(err);
-        else next();
+        if (err) {
+            debug(err);
+            res.send(403, err);
+        } else {
+            next();
+        }
 	});
 };

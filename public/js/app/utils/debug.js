@@ -3,7 +3,8 @@ define(function (require, exports, module) {
 
     module.exports = function (context) {
         return function () {
-            console.log.apply(console, [context, ":"].concat([].slice.call(arguments, 0)));
+            var args = ["%c" + context, "color: grey"].concat([].slice.call(arguments));
+            console.log.apply(console, args);
         }
     };
 });

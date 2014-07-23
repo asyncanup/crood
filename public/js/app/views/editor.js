@@ -6,7 +6,8 @@ define(function (require, exports, module) {
         $ = require("jquery");
 
     var animate = require("utils/animate"),
-        debug = require("utils/debug")("views/editor"),
+        debug = require("utils/debug")(module.id),
+        notify = require("utils/notify"),
         path = require("utils/path"),
         shell = require("utils/shell");
 
@@ -49,7 +50,7 @@ define(function (require, exports, module) {
                 _this = this;
             
             if (!filePath) {
-                debug("No file to show!");
+                notify.error("No file to show!");
                 this.changeContent(this.helpContent);
                 this.model.set("fileExt", this.defaultFileExt);
                 return;
@@ -61,8 +62,10 @@ define(function (require, exports, module) {
             var model = this.model;
             shell.openFile(filePath, function (res) {
                 debug("File data successfully fetched!");
-                _this.changeContent(res.data);
-            });
+                _this.changeContent(res);
+            }, function (err) {
+                notify.error(err.responseText);
+            }, this);
         },
 
         setSyntaxMode: function () {
@@ -134,7 +137,6 @@ define(function (require, exports, module) {
                 debug("Could not serialize current cursor position.", cursorPosition);
                 return false;
             }
-            //debug("Saving last cursor position in file: " + filePath, "\nto: " + lastPosition);
             window.localStorage.setItem(this.lastPositionKey(filePath), lastPosition);
             return true;
         }, 1000),
@@ -175,14 +177,12 @@ define(function (require, exports, module) {
                             contents = _this.aceEditor.getValue();
                             
                         shell.saveFile(filePath, contents, function (res){
-                            if (res.success) {
-                                debug("File saved: " + filePath);
-                                animate.saveSuccessful(_this.$el);
-                            } else {
-                                debug("Could not save file to disk: " + filePath);
-                                animate.saveFailure(_this.$el);
-                            }
-                        });
+                            debug("File saved: " + filePath);
+                            animate.saveSuccessful(_this.$el);
+                        }, function (err) {
+                            notify.error(err.responseText);
+                            animate.saveFailure(_this.$el);
+                        }, this);
                     },
                     readOnly: true // false if this command should not apply in readOnly mode
                 });

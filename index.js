@@ -11,6 +11,5 @@ module.exports = function (opts) {
         root = opts.root || process.cwd();
     
     app.set("root", root);
-    
     app.start(port, host);
 };
