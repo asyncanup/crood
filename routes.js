@@ -71,6 +71,25 @@ module.exports = function (app) {
     });
 
     app.post("/upload", function (req, res) {
-        debug(req.files);
+        var file = req.files.file,
+            folderPath = req.query.folderPath;
+
+        console.log("yayy");
+        if (!file || !file.path) {
+            res.send(400, "File not found in upload request.");
+        } else if (!folderPath) {
+            res.send(400, "Folder path not specified for uploaded file.");
+            fs.unlink(file.path);
+        } else {
+            var newPath = path.join(folderPath, file.originalFilename);
+            fs.rename(file.path, newPath, function (err) {
+                if (err) {
+                    res.send(500, "Could not save file to folder: " + folderPath);
+                } else {
+                    res.json({ success: true });
+                    debug("Uploaded: " + newPath);
+                }
+            });
+        }
     });
 };

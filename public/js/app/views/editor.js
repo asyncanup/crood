@@ -23,17 +23,19 @@ define(function (require, exports, module) {
             this.listenTo(this.model, "change:filePath", this.loadFile);
             this.listenTo(this.model, "change:fileExt", this.setSyntaxMode);
             
-            this.uploadDropzone = new Dropzone(this.el, {
+            var dz = this.uploadDropzone = new Dropzone(this.el, {
                 url: "/upload"
+            });
+
+            dz.on("complete", function (file) {
+                dz.removeFile(file);
             });
         },
 
         events: {
-            // "drop": function (event) {
-            //     var files = event.originalEvent.dataTransfer.files;
-            //     debugger;
-                
-            // }
+            "drop": function (event) {
+                this.uploadDropzone.options.url = "/upload?folderPath=" + this.model.get("folderPath");
+            }
         },
 
         isCursorChangeHandlerActive: true,
