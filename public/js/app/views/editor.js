@@ -3,7 +3,8 @@ define(function (require, exports, module) {
 
     var Backbone = require("backbone"),
         _ = require("underscore"),
-        $ = require("jquery");
+        $ = require("jquery"),
+        Dropzone = require("dropzone");
 
     var animate = require("utils/animate"),
         debug = require("utils/debug")(module.id),
@@ -21,20 +22,18 @@ define(function (require, exports, module) {
 
             this.listenTo(this.model, "change:filePath", this.loadFile);
             this.listenTo(this.model, "change:fileExt", this.setSyntaxMode);
+            
+            this.uploadDropzone = new Dropzone(this.el, {
+                url: "/upload"
+            });
         },
 
         events: {
-            "drop": function (event) {
-                var _this = this,
-                    filePath = this.dummyFilePath;
-
-                var files = event.originalEvent.dataTransfer.files;
-
-                if (files.length) {
-                    _this.model.set("filePath", filePath);
-                    return false;
-                }
-            }
+            // "drop": function (event) {
+            //     var files = event.originalEvent.dataTransfer.files;
+            //     debugger;
+                
+            // }
         },
 
         isCursorChangeHandlerActive: true,
@@ -207,7 +206,6 @@ define(function (require, exports, module) {
 
         fileExtRegExp: /\.[^.]+$/,
         defaultFileExt: "text",
-        dummyFilePath: "C:\\Users\\nagarro1\\Desktop\\code\\crood\\public\\css\\main.css",
         defaultTheme: "solarized_light",
         elementId: editorElementId,
         contentAreaCss: null,

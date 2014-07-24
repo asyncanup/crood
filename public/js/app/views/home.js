@@ -18,7 +18,7 @@ define(function (require, exports, module) {
         el: "body",
 
         initialize: function () {
-            var editorModel = window.editorModel = this.editorModel = new EditorModel();
+            var editorModel = this.editorModel = new EditorModel();
 
             editorModel.updateFromQueryString();
             this.changePageTitle(editorModel);

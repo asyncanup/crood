@@ -18,7 +18,8 @@ if (argv.h || argv.help) {
 var opts = {
     root: argv._[0],
     port: argv.p || argv.port,
-    host: argv.a || argv.address || '0.0.0.0'
+    host: argv.a || argv.address || '0.0.0.0',
+    toOpenBrowser: true
 };
 
 if (opts.root) opts.root = path.resolve(opts.root);

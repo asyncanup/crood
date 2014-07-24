@@ -16,6 +16,8 @@ module.exports = function (opts) {
     app.start(port, host, function () {
         var info = this.address();
         debug("Serving everything under: " + root + "\non " + info.address + ":" + info.port);
-        openPage("http://localhost" + ":" + info.port + "/?folderPath=" + root);
+        if (opts.toOpenBrowser) {
+            openPage("http://localhost" + ":" + info.port + "/?folderPath=" + root);
+        }
     });
 };

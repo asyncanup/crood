@@ -53,6 +53,7 @@ module.exports = function (app) {
                 res.send(404, "Error writing file to disk: " + filePath);
             } else {
                 res.json({ success: true });
+                debug("Saved file: " + filePath);
             }
         });
     });
@@ -67,5 +68,9 @@ module.exports = function (app) {
                 res.json({ success: true });
             }
         });
+    });
+
+    app.post("/upload", function (req, res) {
+        debug(req.files);
     });
 };

@@ -3,14 +3,13 @@ define(function (require, exports, module) {
 
     var $ = require("jquery");
     
-    $(document).on("dragover", function (event) {
+    $(document).on("drop dragover", function (event) {
         event.preventDefault();
-        event.stopPropagation();
     });
     
     $(function () {
         var HomeView = require("views/home");
-        var homePage = window.homePage = new HomeView();
+        var homePage = new HomeView();
         homePage.render();
     });
     
