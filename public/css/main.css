@@ -27,37 +27,67 @@ body .folder-input-container {
 .file-list-action-button {
     height: 22px;
     width: 22px;
-    border-radius: 11px;
-    border: 1px solid;
+    border-radius: 12px;
+    border: 1px solid grey;
     padding: 0;
-    position: absolute;
-    left: -27px;
     opacity: 0.6;
 }
-.file-list-action-button i {
-    margin-left: 2px;
+.file-list-action-button > i {
+    margin-top: 4px;
 }
 
-.file-list .new-file-button {
-    top: 44px;
-}
-.file-list .new-file-button.centered {
-    left: 50%;
-    margin-left: -24px;
+.file-list-buttons {
+    position: absolute;
+    top: 38px;
+    width: 100%;
+    text-align: center;
 }
 
-.file-list .new-folder-button {
-    top: 74px;
+.file-list-buttons.vertical {
+    left: -29px;
+    text-align: left;
+    top: 36px;
+    width: 27px;
 }
-.file-list .new-folder-button.centered {
-    left: 50%;
-    margin-left: 4px;
-    top: 44px;
+.file-list-buttons.vertical > .file-list-action-button {
+    margin-top: 9px;
 }
+
+/*.file-list-action-button.vertical {*/
+/*    left: -27px;*/
+/*}*/
+
+/*.file-list .new-file-button.vertical {*/
+/*    top: 46px;*/
+/*}*/
+/*.file-list .new-file-button {*/
+/*    top: 46px;*/
+/*    margin-left: -24px;*/
+/*}*/
+
+/*.file-list .new-folder-button.vertical {*/
+/*    top: 78px;*/
+/*}*/
+/*.file-list .new-folder-button {*/
+/*    left: 50%;*/
+/*    margin-left: 4px;*/
+/*    top: 46px;*/
+/*}*/
+
+/*.file-list .open-terminal-button.vertical {*/
+/*    top: 110px;*/
+/*}*/
+/*.file-list .open-terminal-button {*/
+/*    left: 50%;*/
+/*    margin-left: 24px;*/
+/*    top: 46px;*/
+/*}*/
 
 .file-list .folder-up-button {
     top: 4px;
     transform: scale(0.9);
+    left: -29px;
+    position: absolute;
 }
 
 .file-list-action-button:hover {

@@ -3,14 +3,19 @@ define(function (require, exports, module) {
 
     var $ = require("jquery");
     
+    var ui = require("utils/ui");
+    
     $(document).on("drop dragover", function (event) {
         event.preventDefault();
     });
     
     $(function () {
-        var HomeView = require("views/home");
-        var homePage = new HomeView();
-        homePage.render();
+        if (ui.getQueryStringParameter("terminalPath")) {
+            var TerminalView = require("views/terminal");
+            var terminalPage = new TerminalView().render();
+        } else {
+            var HomeView = require("views/home");
+            var homePage = new HomeView().render();
+        }
     });
-    
 });

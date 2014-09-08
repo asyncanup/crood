@@ -53,6 +53,7 @@ define(function (require, exports, module) {
             this.$el.empty()
                 .append(this.editor.render().el)
                 .append(this.fileList.render().el);
+            return this;
         }
     });
 });

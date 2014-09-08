@@ -1,8 +1,9 @@
 var path = require("path"),
-    debug = require("debug")("crood");
+    bodyParser = require('body-parser'),
+    debug = require("./logger");
 
 module.exports = function (app) {
-	app.use(app.express.bodyParser());
+	app.use(bodyParser.urlencoded({ extended: true }));
 	
 	app.use(function (req, res, next) {
 	    var root = app.get("root");

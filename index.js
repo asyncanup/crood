@@ -1,6 +1,6 @@
 var apper = require("apper"),
     openPage = require("opener"),
-    debug = require("debug")("crood");
+    debug = require("./logger");
 
 module.exports = function (opts) {
     opts = opts || {};

@@ -3,11 +3,11 @@
     <li class="{{#if isActive}}active{{/if}}">
         {{#if isFolder}}
             <i class="icon-chevron-right"></i>
-            <a href="?folderPath={{filePath}}">
+            <a href="?folderPath={{filePath}}&filePath={{currentFilePath}}">
                 {{fileName}}
             </a>
         {{else}}
-            <a href="?filePath={{filePath}}&folderPath={{folderPath}}">
+            <a href="?folderPath={{folderPath}}&filePath={{filePath}}">
                 {{fileName}}
             </a>
         {{/if}}

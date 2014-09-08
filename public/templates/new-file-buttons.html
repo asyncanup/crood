@@ -1,6 +1,11 @@
-<button class="file-list-action-button btn new-file-button">
-    <i class="icon-plus"></i>
-</button>
-<button class="file-list-action-button btn new-folder-button">
-    <i class="icon-folder-open"></i>
-</button>
+<div class="file-list-buttons">
+    <a href="#" class="file-list-action-button btn new-file-button">
+        <i class="fa fa-file-o" title="Create new file"></i>
+    </a>
+    <a href="#" class="file-list-action-button btn new-folder-button">
+        <i class="fa fa-folder-o" title="Create new folder"></i>
+    </a>
+    <a href="?terminalPath={{folderPath}}" class="file-list-action-button btn open-terminal-button" target="_blank">
+        <i class="fa fa-terminal" title="Open new terminal window"></i>
+    </a>
+</div>

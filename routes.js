@@ -2,7 +2,7 @@ var fs = require("fs"),
     path = require("path"),
     _ = require("underscore");
     
-var debug = require("debug")("crood");
+var debug = require("./logger");
 
 module.exports = function (app) {
 

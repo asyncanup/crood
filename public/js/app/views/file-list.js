@@ -82,6 +82,8 @@ define(function (require, exports, module) {
                     el.find("i").addClass("icon-white");
                     this.model.set("folderPath", upFolder);
                 }
+                
+                event.preventDefault();
             },
             
             "click .new-file-button": function (event) {
@@ -106,6 +108,8 @@ define(function (require, exports, module) {
                 } else {
                     this.unSelectButton(el);
                 }
+                
+                event.preventDefault();
             },
             
             "click .new-folder-button": function (event) {
@@ -126,6 +130,15 @@ define(function (require, exports, module) {
                 } else {
                     this.unSelectButton(el);
                 }
+                
+                event.preventDefault();
+            },
+            
+            "click .open-terminal-button": function (event) {
+                var el = $(event.target).closest(".open-terminal-button"),
+                    icon = el.find("i");
+                
+                
             }
         },
         
@@ -198,9 +211,11 @@ define(function (require, exports, module) {
                 }, 2000);
                 if (folderPath) {
                     el.append(_this.folderUpButtonTemplate({
-                        upFolderPath: path.upFolder(folderPath)
+                        upFolderLink: "?folderPath=" + path.upFolder(folderPath) + "&filePath=" + filePath
                     }));
-                    el.append(_this.newFileButtonsTemplate());
+                    el.append(_this.newFileButtonsTemplate({
+                        folderPath: folderPath
+                    }));
                 }
                 el.append(_this.folderInputTemplate({
                     folderPath: folderPath
@@ -209,6 +224,7 @@ define(function (require, exports, module) {
                     files: _.map(items.toJSON(), function (item) {
                         item.filePath = path.join(folderPath, item.fileName);
                         item.folderPath = folderPath;
+                        item.currentFilePath = filePath;
                         return item;
                     })
                 }));
@@ -216,9 +232,8 @@ define(function (require, exports, module) {
                     $(".ace_editor").find("textarea").focus();
                 }
                 
-                if (!items.length) {
-                    el.find(".new-file-button").addClass("centered");
-                    el.find(".new-folder-button").addClass("centered");
+                if (items.length) {
+                    el.find(".file-list-buttons").addClass("vertical");
                 }
                 
                 var folderInputEl = el.find(".folder-input")[0];
