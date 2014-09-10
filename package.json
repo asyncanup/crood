@@ -7,11 +7,13 @@
     "email": "pixelsallover@gmail.com"
   },
   "dependencies": {
-    "debug": "0.7.2",
     "apper": "2.3.2",
-    "underscore": "1.5.1",
+    "body-parser": "^1.8.1",
+    "debug": "0.7.2",
     "minimist": "0.2.0",
-    "opener": "1.3.0"
+    "opener": "1.3.0",
+    "underscore": "1.5.1",
+    "web-terminal": "^0.6.6"
   },
   "keywords": [
     "code editor",
@@ -30,7 +32,7 @@
   "scripts": {
     "prepublish": "npm prune",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "DEBUG=apper:*,crood node server.js"
   },
   "license": "MIT",
   "readmeFilename": "README.md",

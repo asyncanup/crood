@@ -74,7 +74,6 @@ module.exports = function (app) {
         var file = req.files.file,
             folderPath = req.query.folderPath;
 
-        console.log("yayy");
         if (!file || !file.path) {
             res.send(400, "File not found in upload request.");
         } else if (!folderPath) {
@@ -91,5 +90,10 @@ module.exports = function (app) {
                 }
             });
         }
+    });
+
+    app.get('/?terminalPath=:terminalPath', function (req, res) {
+        res.writeHead(200, 'text/html');
+        fs.createReadStream(path.join(__dirname, 'public', 'terminal', 'index.html')).pipe(res);
     });
 };

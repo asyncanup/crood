@@ -1,5 +1,6 @@
 var path = require("path"),
     bodyParser = require('body-parser'),
+    webTerminal = require('web-terminal'),
     debug = require("./logger");
 
 module.exports = function (app) {
